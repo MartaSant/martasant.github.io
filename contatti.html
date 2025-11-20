@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Food Facts - Contact</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-content">
+      <a href="index.html" class="site-logo" aria-label="Food Facts home">
+        <div class="logo">
+          <div class="logo-mark">
+            <span class="ff ff-left">F</span>
+            <span class="ff ff-right">F</span>
+          </div>
+          <div class="logo-text" aria-label="Food Facts">
+            <span class="logo-char">F</span>
+            <span class="logo-char">o</span>
+            <span class="logo-char">o</span>
+            <span class="logo-char">d</span>
+            <span class="logo-char">F</span>
+            <span class="logo-char">a</span>
+            <span class="logo-char">c</span>
+            <span class="logo-char">t</span>
+            <span class="logo-char">s</span>
+          </div>
+        </div>
+      </a>
+      <nav class="site-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="contatti.html" class="active">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <header class="page-header">
+      <h1 class="page-title">Contact</h1>
+      <p class="page-subtitle">
+        Whether you're a curious reader, a food producer, or a brand working with food,
+        feel free to reach out.
+      </p>
+    </header>
+
+    <div class="contact-wrapper">
+      <section class="contact-box">
+        <h3>Where you can find me</h3>
+        <p>
+          📧 Email: <a href="mailto:your.email@example.com">your.email@example.com</a>
+        </p>
+        <p>
+          📸 Instagram: <strong>@your_profile</strong>
+        </p>
+        <p>
+          🧪 Topics I love: food labels, production processes, food science basics,
+          and how to make information about food more human and gentle.
+        </p>
+        <p style="margin-top: 0.75rem;">
+          You can replace these details with your real email, social media,
+          or any other way you’d like people to contact you.
+        </p>
+      </section>
+
+      <section class="contact-box">
+        <h3>Send me a message</h3>
+        <!-- Visual-only form; needs backend to actually send -->
+        <form class="contact-form">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" placeholder="Your name" />
+
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="your-email@example.com" />
+
+          <label for="message">Message</label>
+          <textarea id="message" name="message" placeholder="Tell me what you’d like to talk about..."></textarea>
+
+          <button type="submit" class="btn">Send</button>
+        </form>
+        <p style="font-size: 0.8rem; color: var(--color-muted); margin-top: 0.5rem;">
+          Note: to actually send this form, we’ll need to connect it to a service
+          or a small backend later.
+        </p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2025 Food Facts. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>
