@@ -65,7 +65,8 @@
     .editor-output textarea {
       width: 100%;
       min-height: 160px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+        "Liberation Mono", "Courier New", monospace;
       font-size: 0.8rem;
       line-height: 1.4;
       border-radius: 0.5rem;
@@ -135,7 +136,8 @@
       <h1 class="page-title">Post generator (for Marta)</h1>
       <p class="page-subtitle">
         Fill in the fields, click “Generate code”, then copy the HTML into a new
-        <code>postX.html</code> file and into <code>blog.html</code> / <code>index.html</code>.
+        <code>postX.html</code> file and into <code>blog.html</code> /
+        <code>index.html</code>.
       </p>
     </header>
 
@@ -166,11 +168,22 @@
             required
           />
 
+          <label for="postMetaLabel">Meta label (blog line)</label>
+          <input
+            type="text"
+            id="postMetaLabel"
+            placeholder="Example: Intro, Overproduction, Label deep dive..."
+          />
+          <p class="editor-hint">
+            Shown before the date in the blog and home meta line. If left empty,
+            the first selected category will be used.
+          </p>
+
           <label for="postDate">Date (as displayed)</label>
           <input
             type="text"
             id="postDate"
-            placeholder="Example: March 2025"
+            placeholder="Example: November 25, 2025"
           />
 
           <label for="postReadTime">Estimated reading time (optional)</label>
@@ -192,7 +205,8 @@
             <label><input type="checkbox" name="categories" value="opinions" /> Opinions</label>
           </div>
           <p class="editor-hint">
-            These map to the filters in <code>blog.html</code>. You can select more than one.
+            These map to the filters in <code>blog.html</code>. You can select
+            more than one.
           </p>
 
           <label for="postExcerpt">Short excerpt (for blog + home cards)</label>
@@ -207,11 +221,14 @@
             placeholder="Paste your full post here. Each empty line will become a new paragraph."
           ></textarea>
           <p class="editor-hint">
-            For simple posts, just write normally and separate paragraphs with a blank line.
-            If you need lists or special formatting, you can edit the generated HTML by hand afterwards.
+            For simple posts, just write normally and separate paragraphs with a
+            blank line. If you need lists or special formatting, you can edit
+            the generated HTML by hand afterwards.
           </p>
 
-          <button type="submit" class="btn" style="margin-top:0.5rem;">Generate code</button>
+          <button type="submit" class="btn" style="margin-top:0.5rem;">
+            Generate code
+          </button>
         </form>
       </div>
 
@@ -223,7 +240,8 @@
           <h3>1. Post HTML file (<code>postX.html</code>)</h3>
           <textarea id="postOutput" readonly></textarea>
           <p class="small-note">
-            Create a new file (e.g. <code>post2.html</code>) and paste this entire code into it.
+            Create a new file (e.g. <code>post2.html</code>) and paste this
+            entire code into it.
           </p>
         </div>
 
@@ -231,8 +249,8 @@
           <h3>2. Blog list snippet (<code>blog.html</code>)</h3>
           <textarea id="blogOutput" readonly></textarea>
           <p class="small-note">
-            Paste this inside <code>blog.html</code>, in the posts area (with the other
-            <code>&lt;article class="post"&gt;</code> blocks).
+            Paste this inside <code>blog.html</code>, in the posts area (with
+            the other <code>&lt;article class="post"&gt;</code> blocks).
           </p>
         </div>
 
@@ -240,8 +258,8 @@
           <h3>3. Home “Latest posts” snippet (<code>index.html</code>)</h3>
           <textarea id="homeOutput" readonly></textarea>
           <p class="small-note">
-            Paste this inside the “Latest posts” section on the home page, next to the
-            other <code>post-card</code> elements.
+            Paste this inside the “Latest posts” section on the home page, next
+            to the other <code>post-card</code> elements.
           </p>
         </div>
       </div>
@@ -256,68 +274,106 @@
 
   <script>
     const CATEGORY_LABELS = {
-      production: 'Production',
-      waste: 'Waste',
-      sustainability: 'Sustainability',
-      innovation: 'Innovation',
-      consumers: 'Consumers',
-      policy: 'Policy',
-      health: 'Health',
-      opinions: 'Opinions'
+      production: "Production",
+      waste: "Waste",
+      sustainability: "Sustainability",
+      innovation: "Innovation",
+      consumers: "Consumers",
+      policy: "Policy",
+      health: "Health",
+      opinions: "Opinions",
     };
 
     function escapeHtml(str) {
       return String(str)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;');
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
     }
 
     function escapeAttr(str) {
-      return escapeHtml(str).replace(/"/g, '&quot;');
+      return escapeHtml(str).replace(/"/g, "&quot;");
     }
 
-    document.getElementById('postForm').addEventListener('submit', function (e) {
-      e.preventDefault();
+    document
+      .getElementById("postForm")
+      .addEventListener("submit", function (e) {
+        e.preventDefault();
 
-      const id = document.getElementById('postId').value.trim();
-      const title = document.getElementById('postTitle').value.trim();
-      const date = document.getElementById('postDate').value.trim();
-      const readTime = document.getElementById('postReadTime').value.trim();
-      const excerpt = document.getElementById('postExcerpt').value.trim();
-      const contentRaw = document.getElementById('postContent').value.trim();
+        const id = document.getElementById("postId").value.trim();
+        const title = document.getElementById("postTitle").value.trim();
+        const date = document.getElementById("postDate").value.trim();
+        const readTime = document
+          .getElementById("postReadTime")
+          .value.trim();
+        const excerpt = document.getElementById("postExcerpt").value.trim();
+        const contentRaw = document.getElementById("postContent").value.trim();
+        let metaLabel = document
+          .getElementById("postMetaLabel")
+          .value.trim();
 
-      if (!id || !title || !contentRaw) {
-        alert('Please fill at least: post number, title and content.');
-        return;
-      }
+        if (!id || !title || !contentRaw) {
+          alert("Please fill at least: post number, title and content.");
+          return;
+        }
 
-      const categoryInputs = document.querySelectorAll('input[name="categories"]:checked');
-      const categories = Array.from(categoryInputs).map((el) => el.value);
+        const categoryInputs = document.querySelectorAll(
+          'input[name="categories"]:checked'
+        );
+        const categoryKeys = Array.from(categoryInputs).map(
+          (el) => el.value
+        );
+        const categoriesHuman = categoryKeys.map(
+          (c) => CATEGORY_LABELS[c] || c
+        );
+        const categoriesAttr = categoriesHuman.join(",");
 
-      const categoriesHuman = categories.map((c) => CATEGORY_LABELS[c] || c);
-      const metaPieces = [];
-      if (date) metaPieces.push(date);
-      if (categoriesHuman.length) metaPieces.push(categoriesHuman.join(' · '));
-      if (readTime) metaPieces.push(readTime);
-      const metaText = metaPieces.join(' · ');
+        if (!metaLabel && categoriesHuman.length > 0) {
+          metaLabel = categoriesHuman[0];
+        }
 
-      // Trasforma il testo in paragrafi: blocchi separati da una riga vuota
-      const blocks = contentRaw.split(/\n\s*\n/).map((b) => b.trim()).filter(Boolean);
-      const postBodyHtml = blocks
-        .map((b) => '<p>' + escapeHtml(b).replace(/\n/g, '<br />') + '</p>')
-        .join('\n      ');
+        const postMetaPieces = [];
+        const blogMetaPieces = [];
 
-      const fileName = 'post' + id + '.html';
-      const categoriesAttr = categories.join(',');
+        if (metaLabel) {
+          postMetaPieces.push(metaLabel);
+          blogMetaPieces.push(metaLabel);
+        }
+        if (date) {
+          postMetaPieces.push(date);
+          blogMetaPieces.push(date);
+        }
+        if (readTime) {
+          postMetaPieces.push(readTime);
+        }
 
-      const titleEsc = escapeHtml(title);
-      const metaEsc = escapeHtml(metaText);
-      const excerptEsc = escapeHtml(excerpt);
+        const postMetaText = postMetaPieces.join(" • ");
+        const blogMetaText = blogMetaPieces.join(" • ");
 
-      // 1) Post HTML
-      const postHtml =
-`<!DOCTYPE html>
+        // Trasforma il testo in paragrafi: blocchi separati da una riga vuota
+        const blocks = contentRaw
+          .split(/\n\s*\n/)
+          .map((b) => b.trim())
+          .filter(Boolean);
+        const postBodyHtml = blocks
+          .map(
+            (b) =>
+              "<p>" +
+              escapeHtml(b).replace(/\n/g, "<br />") +
+              "</p>"
+          )
+          .join("\n      ");
+
+        const fileName = "post" + id + ".html";
+
+        const titleEsc = escapeHtml(title);
+        const postMetaEsc = escapeHtml(postMetaText);
+        const blogMetaEsc = escapeHtml(blogMetaText);
+        const excerptEsc = escapeHtml(excerpt);
+        const categoriesEsc = escapeAttr(categoriesAttr);
+
+        // 1) Post HTML completo
+        const postHtml = `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -358,7 +414,7 @@
   <main class="container">
     <header class="page-header">
       <h1 class="page-title">${titleEsc}</h1>
-      <p class="post-meta">${metaEsc}</p>
+      <p class="post-meta">${postMetaEsc}</p>
     </header>
 
     <article class="post">
@@ -380,32 +436,30 @@
 </body>
 </html>`;
 
-      // 2) Blog snippet
-      const blogSnippet =
-`<article class="post"
-  data-title="${escapeAttr(title)}"
-  data-categories="${escapeAttr(categoriesAttr)}">
-  <h2 class="post-title">
-    <a href="${fileName}">${titleEsc}</a>
-  </h2>
-  <p class="post-meta">${metaEsc}</p>
+        // 2) Snippet per blog.html (stesso stile degli altri post)
+        const blogSnippet = `<article
+  class="post"
+  data-categories="${categoriesEsc}"
+>
+  <h2 class="post-title">${titleEsc}</h2>
+  <p class="post-meta">${blogMetaEsc}</p>
   <p class="post-excerpt">${excerptEsc}</p>
+  <a href="${fileName}" class="btn">Read the full post</a>
 </article>`;
 
-      // 3) Home "Latest posts" snippet
-      const homeSnippet =
-`<article class="post-card">
+        // 3) Snippet per home (Latest posts)
+        const homeSnippet = `<article class="post-card">
   <h3 class="post-title">
     <a href="${fileName}">${titleEsc}</a>
   </h3>
-  <p class="post-meta">${metaEsc}</p>
+  <p class="post-meta">${blogMetaEsc}</p>
   <p class="post-excerpt">${excerptEsc}</p>
 </article>`;
 
-      document.getElementById('postOutput').value = postHtml;
-      document.getElementById('blogOutput').value = blogSnippet;
-      document.getElementById('homeOutput').value = homeSnippet;
-    });
+        document.getElementById("postOutput").value = postHtml;
+        document.getElementById("blogOutput").value = blogSnippet;
+        document.getElementById("homeOutput").value = homeSnippet;
+      });
   </script>
 </body>
 </html>
