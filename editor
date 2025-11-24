@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Food Facts – Post generator (for Marta)</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Piccole aggiunte solo per questa pagina */
+    .editor-layout {
+      display: grid;
+      grid-template-columns: 1.2fr 1.3fr;
+      gap: 2rem;
+      margin: 1.5rem 0 2rem;
+    }
+
+    .editor-form label {
+      display: block;
+      font-size: 0.9rem;
+      margin-bottom: 0.25rem;
+      font-weight: 500;
+    }
+
+    .editor-form input[type="text"],
+    .editor-form input[type="number"],
+    .editor-form textarea,
+    .editor-form select {
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.5rem;
+      border: 1px solid var(--color-border-soft);
+      font-family: inherit;
+      font-size: 0.95rem;
+      background: #fbf6ea;
+      box-sizing: border-box;
+      margin-bottom: 0.8rem;
+    }
+
+    .editor-form textarea {
+      min-height: 180px;
+      resize: vertical;
+    }
+
+    .editor-hint {
+      font-size: 0.8rem;
+      color: var(--color-muted);
+      margin: -0.2rem 0 0.6rem;
+    }
+
+    .editor-categories {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
+      margin-bottom: 0.9rem;
+      font-size: 0.9rem;
+    }
+
+    .editor-categories label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      margin-bottom: 0;
+    }
+
+    .editor-output textarea {
+      width: 100%;
+      min-height: 160px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.8rem;
+      line-height: 1.4;
+      border-radius: 0.5rem;
+      border: 1px solid var(--color-border-soft);
+      padding: 0.5rem 0.75rem;
+      background: #fbf6ea;
+      box-sizing: border-box;
+      white-space: pre;
+      overflow: auto;
+    }
+
+    .editor-output h3 {
+      font-size: 0.95rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .editor-output-block {
+      margin-bottom: 1.1rem;
+    }
+
+    .small-note {
+      font-size: 0.8rem;
+      color: var(--color-muted);
+      margin-top: 0.25rem;
+    }
+
+    @media (max-width: 900px) {
+      .editor-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER come nel resto del sito -->
+  <header class="site-header">
+    <div class="container header-content">
+      <a href="index.html" class="site-logo" aria-label="Food Facts home">
+        <div class="logo">
+          <div class="logo-mark">
+            <span class="ff ff-left">F</span>
+            <span class="ff ff-right">F</span>
+          </div>
+          <div class="logo-text" aria-label="Food Facts">
+            <span class="logo-char">F</span>
+            <span class="logo-char">o</span>
+            <span class="logo-char">o</span>
+            <span class="logo-char">d</span>
+            <span class="logo-char">F</span>
+            <span class="logo-char">a</span>
+            <span class="logo-char">c</span>
+            <span class="logo-char">t</span>
+            <span class="logo-char">s</span>
+          </div>
+        </div>
+      </a>
+      <nav class="site-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html" class="active">Blog</a>
+        <a href="contatti.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <header class="page-header">
+      <h1 class="page-title">Post generator (for Marta)</h1>
+      <p class="page-subtitle">
+        Fill in the fields, click “Generate code”, then copy the HTML into a new
+        <code>postX.html</code> file and into <code>blog.html</code> / <code>index.html</code>.
+      </p>
+    </header>
+
+    <section class="editor-layout">
+      <!-- Colonna sinistra: form -->
+      <div class="contact-box">
+        <h2 style="font-size:1.1rem; margin-bottom:0.75rem;">New post data</h2>
+
+        <form id="postForm" class="editor-form">
+          <label for="postId">Post number</label>
+          <input
+            type="number"
+            id="postId"
+            min="0"
+            step="1"
+            placeholder="Example: 2 (for post2.html)"
+            required
+          />
+          <p class="editor-hint">
+            This will be used to build the filename, e.g. <code>post2.html</code>.
+          </p>
+
+          <label for="postTitle">Title</label>
+          <input
+            type="text"
+            id="postTitle"
+            placeholder="Example: From tomato field to can: the full journey"
+            required
+          />
+
+          <label for="postDate">Date (as displayed)</label>
+          <input
+            type="text"
+            id="postDate"
+            placeholder="Example: March 2025"
+          />
+
+          <label for="postReadTime">Estimated reading time (optional)</label>
+          <input
+            type="text"
+            id="postReadTime"
+            placeholder="Example: 12 min read"
+          />
+
+          <label>Categories</label>
+          <div class="editor-categories">
+            <label><input type="checkbox" name="categories" value="production" /> Production</label>
+            <label><input type="checkbox" name="categories" value="waste" /> Waste</label>
+            <label><input type="checkbox" name="categories" value="sustainability" /> Sustainability</label>
+            <label><input type="checkbox" name="categories" value="innovation" /> Innovation</label>
+            <label><input type="checkbox" name="categories" value="consumers" /> Consumers</label>
+            <label><input type="checkbox" name="categories" value="policy" /> Policy</label>
+            <label><input type="checkbox" name="categories" value="health" /> Health</label>
+            <label><input type="checkbox" name="categories" value="opinions" /> Opinions</label>
+          </div>
+          <p class="editor-hint">
+            These map to the filters in <code>blog.html</code>. You can select more than one.
+          </p>
+
+          <label for="postExcerpt">Short excerpt (for blog + home cards)</label>
+          <textarea
+            id="postExcerpt"
+            placeholder="2–3 sentences to summarise the post for the cards."
+          ></textarea>
+
+          <label for="postContent">Full post content</label>
+          <textarea
+            id="postContent"
+            placeholder="Paste your full post here. Each empty line will become a new paragraph."
+          ></textarea>
+          <p class="editor-hint">
+            For simple posts, just write normally and separate paragraphs with a blank line.
+            If you need lists or special formatting, you can edit the generated HTML by hand afterwards.
+          </p>
+
+          <button type="submit" class="btn" style="margin-top:0.5rem;">Generate code</button>
+        </form>
+      </div>
+
+      <!-- Colonna destra: output -->
+      <div class="contact-box editor-output">
+        <h2 style="font-size:1.1rem; margin-bottom:0.75rem;">Generated HTML</h2>
+
+        <div class="editor-output-block">
+          <h3>1. Post HTML file (<code>postX.html</code>)</h3>
+          <textarea id="postOutput" readonly></textarea>
+          <p class="small-note">
+            Create a new file (e.g. <code>post2.html</code>) and paste this entire code into it.
+          </p>
+        </div>
+
+        <div class="editor-output-block">
+          <h3>2. Blog list snippet (<code>blog.html</code>)</h3>
+          <textarea id="blogOutput" readonly></textarea>
+          <p class="small-note">
+            Paste this inside <code>blog.html</code>, in the posts area (with the other
+            <code>&lt;article class="post"&gt;</code> blocks).
+          </p>
+        </div>
+
+        <div class="editor-output-block">
+          <h3>3. Home “Latest posts” snippet (<code>index.html</code>)</h3>
+          <textarea id="homeOutput" readonly></textarea>
+          <p class="small-note">
+            Paste this inside the “Latest posts” section on the home page, next to the
+            other <code>post-card</code> elements.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2025 Food Facts. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    const CATEGORY_LABELS = {
+      production: 'Production',
+      waste: 'Waste',
+      sustainability: 'Sustainability',
+      innovation: 'Innovation',
+      consumers: 'Consumers',
+      policy: 'Policy',
+      health: 'Health',
+      opinions: 'Opinions'
+    };
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+
+    function escapeAttr(str) {
+      return escapeHtml(str).replace(/"/g, '&quot;');
+    }
+
+    document.getElementById('postForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const id = document.getElementById('postId').value.trim();
+      const title = document.getElementById('postTitle').value.trim();
+      const date = document.getElementById('postDate').value.trim();
+      const readTime = document.getElementById('postReadTime').value.trim();
+      const excerpt = document.getElementById('postExcerpt').value.trim();
+      const contentRaw = document.getElementById('postContent').value.trim();
+
+      if (!id || !title || !contentRaw) {
+        alert('Please fill at least: post number, title and content.');
+        return;
+      }
+
+      const categoryInputs = document.querySelectorAll('input[name="categories"]:checked');
+      const categories = Array.from(categoryInputs).map((el) => el.value);
+
+      const categoriesHuman = categories.map((c) => CATEGORY_LABELS[c] || c);
+      const metaPieces = [];
+      if (date) metaPieces.push(date);
+      if (categoriesHuman.length) metaPieces.push(categoriesHuman.join(' · '));
+      if (readTime) metaPieces.push(readTime);
+      const metaText = metaPieces.join(' · ');
+
+      // Trasforma il testo in paragrafi: blocchi separati da una riga vuota
+      const blocks = contentRaw.split(/\n\s*\n/).map((b) => b.trim()).filter(Boolean);
+      const postBodyHtml = blocks
+        .map((b) => '<p>' + escapeHtml(b).replace(/\n/g, '<br />') + '</p>')
+        .join('\n      ');
+
+      const fileName = 'post' + id + '.html';
+      const categoriesAttr = categories.join(',');
+
+      const titleEsc = escapeHtml(title);
+      const metaEsc = escapeHtml(metaText);
+      const excerptEsc = escapeHtml(excerpt);
+
+      // 1) Post HTML
+      const postHtml =
+`<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Food Facts - ${titleEsc}</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-content">
+      <a href="index.html" class="site-logo" aria-label="Food Facts home">
+        <div class="logo">
+          <div class="logo-mark">
+            <span class="ff ff-left">F</span>
+            <span class="ff ff-right">F</span>
+          </div>
+          <div class="logo-text" aria-label="Food Facts">
+            <span class="logo-char">F</span>
+            <span class="logo-char">o</span>
+            <span class="logo-char">o</span>
+            <span class="logo-char">d</span>
+            <span class="logo-char">F</span>
+            <span class="logo-char">a</span>
+            <span class="logo-char">c</span>
+            <span class="logo-char">t</span>
+            <span class="logo-char">s</span>
+          </div>
+        </div>
+      </a>
+      <nav class="site-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html" class="active">Blog</a>
+        <a href="contatti.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <header class="page-header">
+      <h1 class="page-title">${titleEsc}</h1>
+      <p class="post-meta">${metaEsc}</p>
+    </header>
+
+    <article class="post">
+      ${postBodyHtml}
+    </article>
+
+    <p style="margin-top: 1.5rem; font-size: 0.9rem;">
+      <a href="blog.html" style="text-decoration: none; color: var(--color-primary-dark);">
+        &larr; Back to all Food Facts articles
+      </a>
+    </p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2025 Food Facts. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>`;
+
+      // 2) Blog snippet
+      const blogSnippet =
+`<article class="post"
+  data-title="${escapeAttr(title)}"
+  data-categories="${escapeAttr(categoriesAttr)}">
+  <h2 class="post-title">
+    <a href="${fileName}">${titleEsc}</a>
+  </h2>
+  <p class="post-meta">${metaEsc}</p>
+  <p class="post-excerpt">${excerptEsc}</p>
+</article>`;
+
+      // 3) Home "Latest posts" snippet
+      const homeSnippet =
+`<article class="post-card">
+  <h3 class="post-title">
+    <a href="${fileName}">${titleEsc}</a>
+  </h3>
+  <p class="post-meta">${metaEsc}</p>
+  <p class="post-excerpt">${excerptEsc}</p>
+</article>`;
+
+      document.getElementById('postOutput').value = postHtml;
+      document.getElementById('blogOutput').value = blogSnippet;
+      document.getElementById('homeOutput').value = homeSnippet;
+    });
+  </script>
+</body>
+</html>
