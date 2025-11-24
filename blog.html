@@ -4,7 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Food Facts - Blog</title>
-  <link rel="stylesheet" href="style.css" />
+  <!-- notare ?v=3 per forzare il ricaricamento del CSS -->
+  <link rel="stylesheet" href="style.css?v=3" />
 </head>
 <body>
   <header class="site-header">
@@ -98,11 +99,6 @@
 
         <section class="widget">
           <h3>Categories</h3>
-          <!--
-            Per aggiungere nuove categorie in futuro:
-            - aggiungi un nuovo <button class="category-pill" data-category="NewCategory">NewCategory</button>
-            - usa lo stesso nome nella data-categories dei post
-          -->
           <div class="category-list" id="category-list">
             <button type="button" class="category-pill" data-category="Production">Production</button>
             <button type="button" class="category-pill" data-category="Waste">Waste</button>
