@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Food Facts – Newsletter generator</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .nl-layout {
+      display: grid;
+      grid-template-columns: 1.1fr 1.4fr;
+      gap: 2rem;
+      margin: 1.5rem 0 2rem;
+    }
+
+    .nl-form label {
+      display: block;
+      font-size: 0.9rem;
+      margin-bottom: 0.25rem;
+      font-weight: 500;
+    }
+
+    .nl-form input[type="text"],
+    .nl-form textarea {
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.5rem;
+      border: 1px solid var(--color-border-soft);
+      font-family: inherit;
+      font-size: 0.95rem;
+      background: #fbf6ea;
+      box-sizing: border-box;
+      margin-bottom: 0.8rem;
+    }
+
+    .nl-form textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .nl-hint {
+      font-size: 0.8rem;
+      color: var(--color-muted);
+      margin: -0.2rem 0 0.6rem;
+    }
+
+    .nl-output textarea {
+      width: 100%;
+      min-height: 320px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+        "Liberation Mono", "Courier New", monospace;
+      font-size: 0.8rem;
+      line-height: 1.4;
+      border-radius: 0.5rem;
+      border: 1px solid var(--color-border-soft);
+      padding: 0.5rem 0.75rem;
+      background: #fbf6ea;
+      box-sizing: border-box;
+      white-space: pre;
+      overflow: auto;
+    }
+
+    .nl-output h2 {
+      font-size: 1.05rem;
+    }
+
+    .small-note {
+      font-size: 0.8rem;
+      color: var(--color-muted);
+      margin-top: 0.25rem;
+    }
+
+    @media (max-width: 900px) {
+      .nl-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER come nel resto del sito -->
+  <header class="site-header">
+    <div class="container header-content">
+      <a href="index.html" class="site-logo" aria-label="Food Facts home">
+        <div class="logo">
+          <div class="logo-mark">
+            <span class="ff ff-left">F</span>
+            <span class="ff ff-right">F</span>
+          </div>
+          <div class="logo-text" aria-label="Food Facts">
+            <span class="logo-char">F</span>
+            <span class="logo-char">o</span>
+            <span class="logo-char">o</span>
+            <span class="logo-char">d</span>
+            <span class="logo-char">F</span>
+            <span class="logo-char">a</span>
+            <span class="logo-char">c</span>
+            <span class="logo-char">t</span>
+            <span class="logo-char">s</span>
+          </div>
+        </div>
+      </a>
+      <nav class="site-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="contatti.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <header class="page-header">
+      <h1 class="page-title">Newsletter generator</h1>
+      <p class="page-subtitle">
+        Create a Food Facts–style HTML email: fill in the fields, generate, then paste the code into your email service (e.g. MailerLite).
+      </p>
+    </header>
+
+    <section class="nl-layout">
+      <!-- Form -->
+      <div class="contact-box">
+        <h2 style="font-size:1.1rem; margin-bottom:0.75rem;">Newsletter content</h2>
+        <form id="nlForm" class="nl-form">
+          <label for="nlSubject">Email subject</label>
+          <input
+            type="text"
+            id="nlSubject"
+            placeholder="Example: What really happens when there’s too much milk?"
+            required
+          />
+          <p class="nl-hint">
+            This is the subject line readers will see in their inbox. You’ll still have to set it in your email platform.
+          </p>
+
+          <label for="nlPreheader">Preheader (optional)</label>
+          <input
+            type="text"
+            id="nlPreheader"
+            placeholder="Example: A short, quiet look behind supermarket abundance."
+          />
+          <p class="nl-hint">
+            Short line that appears next to the subject in the inbox and at the top of the email.
+          </p>
+
+          <label for="nlTitle">Newsletter title (inside email)</label>
+          <input
+            type="text"
+            id="nlTitle"
+            placeholder="Example: The quiet story of surplus milk"
+          />
+
+          <label for="nlIntro">Intro paragraph</label>
+          <textarea
+            id="nlIntro"
+            placeholder="1 short paragraph to open the email."
+          ></textarea>
+
+          <label for="nlBody">Main content</label>
+          <textarea
+            id="nlBody"
+            placeholder="Write normally; each blank line will become a new paragraph. Line breaks inside a paragraph will be kept."
+          ></textarea>
+
+          <label for="nlBullets">Optional bullet list (one item per line)</label>
+          <textarea
+            id="nlBullets"
+            placeholder="Example:
+– What overproduction actually means
+– Where waste hides in the chain
+– 3 small ideas you can try at home"
+          ></textarea>
+
+          <label for="nlCtaLabel">CTA button label (optional)</label>
+          <input
+            type="text"
+            id="nlCtaLabel"
+            placeholder="Example: Read the full article"
+          />
+
+          <label for="nlCtaUrl">CTA button URL</label>
+          <input
+            type="text"
+            id="nlCtaUrl"
+            placeholder="Example: https://martasant.github.io/post2.html"
+          />
+
+          <label for="nlPs">P.S. (optional)</label>
+          <textarea
+            id="nlPs"
+            placeholder="Example: P.S. If you’d like me to cover a specific product or process, just hit reply and tell me."
+          ></textarea>
+
+          <button type="submit" class="btn" style="margin-top:0.5rem;">
+            Generate email HTML
+          </button>
+        </form>
+      </div>
+
+      <!-- Output -->
+      <div class="contact-box nl-output">
+        <h2>Generated email HTML</h2>
+        <textarea id="nlOutput" readonly></textarea>
+        <p class="small-note">
+          Paste this into an HTML block / custom HTML template in your email platform.
+          Replace the unsubscribe line with your provider’s real unsubscribe block if needed.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2025 Food Facts. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    function escapeHtml(str) {
+      return String(str || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    function paragraphsToHtml(text) {
+      const raw = (text || "").trim();
+      if (!raw) return "";
+      const blocks = raw
+        .split(/\n\s*\n/)   // <-- qui ora è \n vero, non \\n
+        .map((b) => b.trim())
+        .filter(Boolean);
+
+      return blocks
+        .map(
+          (b) =>
+            '<p style="margin:0 0 14px 0; font-size:15px; line-height:1.6; color:#3f3727;">' +
+            escapeHtml(b).replace(/\n/g, "<br />") +
+            "</p>"
+        )
+        .join("\n            ");
+    }
+
+    function bulletsToHtml(text) {
+      const raw = (text || "").trim();
+      if (!raw) return "";
+      const lines = raw
+        .split("\n")
+        .map((l) => l.replace(/^[-–•]\s*/, "").trim())
+        .filter(Boolean);
+      if (!lines.length) return "";
+
+      const items = lines
+        .map(
+          (item) =>
+            '<li style="margin:0 0 6px 0;">' +
+            escapeHtml(item) +
+            "</li>"
+        )
+        .join("\n              ");
+
+      return (
+        '<ul style="margin:0 0 16px 22px; padding:0; font-size:15px; line-height:1.6; color:#3f3727;">\n' +
+        "              " +
+        items +
+        "\n            </ul>"
+      );
+    }
+
+    document.getElementById("nlForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const subject = document.getElementById("nlSubject").value.trim();
+      const preheader = document.getElementById("nlPreheader").value.trim();
+      const title = document.getElementById("nlTitle").value.trim();
+      const intro = document.getElementById("nlIntro").value.trim();
+      const body = document.getElementById("nlBody").value.trim();
+      const bullets = document.getElementById("nlBullets").value.trim();
+      const ctaLabel = document.getElementById("nlCtaLabel").value.trim();
+      const ctaUrl = document.getElementById("nlCtaUrl").value.trim();
+      const ps = document.getElementById("nlPs").value.trim();
+
+      if (!subject) {
+        alert("Please fill the email subject.");
+        return;
+      }
+
+      const escSubject = escapeHtml(subject);
+      const escPreheader = escapeHtml(preheader);
+      const escTitle = escapeHtml(title);
+      const escCtaLabel = escapeHtml(ctaLabel);
+      const escCtaUrl = escapeHtml(ctaUrl);
+
+      const introHtml = paragraphsToHtml(intro);
+      const bodyHtml = paragraphsToHtml(body);
+      const bulletsHtml = bulletsToHtml(bullets);
+      const psHtml = ps
+        ? '<p style="margin:14px 0 0 0; font-size:13px; line-height:1.5; color:#6b5c45;"><strong>P.S.</strong> ' +
+          escapeHtml(ps).replace(/\n/g, "<br />") +
+          "</p>"
+        : "";
+
+      const preheaderSpan = preheader
+        ? '<span style="display:none; font-size:1px; color:#fff; max-height:0; max-width:0; opacity:0; overflow:hidden;">' +
+          escPreheader +
+          "</span>"
+        : "";
+
+      const titleBlock = title
+        ? '<h1 style="margin:0 0 12px 0; font-size:24px; line-height:1.3; color:#2b2416; font-weight:600;">' +
+          escTitle +
+          "</h1>"
+        : "";
+
+      const ctaBlock =
+        ctaLabel && ctaUrl
+          ? '<table role="presentation" cellspacing="0" cellpadding="0" border="0" align="left" style="margin:8px 0 20px 0;">\n' +
+            "              <tr>\n" +
+            '                <td align="center" style="border-radius:999px; background-color:#397a5c; padding:0;">\n' +
+            '                  <a href="' +
+            escCtaUrl +
+            '" style="display:inline-block; padding:11px 22px; font-size:14px; font-weight:600; color:#ffffff; text-decoration:none; font-family:system-ui, -apple-system, BlinkMacSystemFont, \'Segoe UI\', sans-serif;">' +
+            escCtaLabel +
+            "</a>\n" +
+            "                </td>\n" +
+            "              </tr>\n" +
+            "            </table>"
+          : "";
+
+      const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>${escSubject}</title>
+</head>
+<body style="margin:0; padding:0; background-color:#fdf7ec;">
+  ${preheaderSpan}
+  <center>
+    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color:#fdf7ec; padding:24px 0;">
+      <tr>
+        <td align="center">
+          <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="600" style="max-width:600px; background-color:#ffffff; border-radius:18px; overflow:hidden; box-shadow:0 8px 24px rgba(0,0,0,0.06); font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">
+            <tr>
+              <td style="padding:20px 28px 10px 28px; background:linear-gradient(135deg,#ffe5cf,#fdf7ec); border-bottom:1px solid #f1e2cf;">
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td valign="middle" style="font-size:13px; color:#6b5c45; text-align:left;">
+                      <span style="display:inline-block; padding:6px 11px; border-radius:999px; background-color:#ffffffcc; font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:#6b5c45;">Food Facts newsletter</span>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:22px 28px 10px 28px;">
+                ${titleBlock}
+                ${introHtml}
+                ${bodyHtml}
+                ${bulletsHtml}
+                ${ctaBlock}
+                ${psHtml}
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:14px 28px 18px 28px; border-top:1px solid #f1e2cf; background-color:#fff8ee;">
+                <p style="margin:0 0 6px 0; font-size:12px; line-height:1.5; color:#8b7a60;">You are receiving this email because you subscribed to Food Facts updates.</p>
+                <p style="margin:0 0 4px 0; font-size:12px; line-height:1.5; color:#8b7a60;">If you no longer wish to receive these emails, please use the unsubscribe option provided by your email service.</p>
+                <!-- Replace this line with your provider's official unsubscribe block if required -->
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </center>
+</body>
+</html>`;
+
+      document.getElementById("nlOutput").value = html;
+    });
+  </script>
+</body>
+</html>

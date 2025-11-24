@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Food Facts – Sitemap generator</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .sitemap-layout {
+      display: grid;
+      grid-template-columns: 1.1fr 1.4fr;
+      gap: 2rem;
+      margin: 1.5rem 0 2rem;
+    }
+
+    .sitemap-form label {
+      display: block;
+      font-size: 0.9rem;
+      margin-bottom: 0.25rem;
+      font-weight: 500;
+    }
+
+    .sitemap-form input[type="text"],
+    .sitemap-form select,
+    .sitemap-form textarea {
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.5rem;
+      border: 1px solid var(--color-border-soft);
+      font-family: inherit;
+      font-size: 0.95rem;
+      background: #fbf6ea;
+      box-sizing: border-box;
+      margin-bottom: 0.8rem;
+    }
+
+    .sitemap-form textarea {
+      min-height: 140px;
+      resize: vertical;
+    }
+
+    .sitemap-hint {
+      font-size: 0.8rem;
+      color: var(--color-muted);
+      margin: -0.2rem 0 0.6rem;
+    }
+
+    .sitemap-output textarea {
+      width: 100%;
+      min-height: 260px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+        "Liberation Mono", "Courier New", monospace;
+      font-size: 0.8rem;
+      line-height: 1.4;
+      border-radius: 0.5rem;
+      border: 1px solid var(--color-border-soft);
+      padding: 0.5rem 0.75rem;
+      background: #fbf6ea;
+      box-sizing: border-box;
+      white-space: pre;
+      overflow: auto;
+    }
+
+    .sitemap-output h2 {
+      font-size: 1.05rem;
+    }
+
+    .small-note {
+      font-size: 0.8rem;
+      color: var(--color-muted);
+      margin-top: 0.25rem;
+    }
+
+    @media (max-width: 900px) {
+      .sitemap-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header come il resto del sito -->
+  <header class="site-header">
+    <div class="container header-content">
+      <a href="index.html" class="site-logo" aria-label="Food Facts home">
+        <div class="logo">
+          <div class="logo-mark">
+            <span class="ff ff-left">F</span>
+            <span class="ff ff-right">F</span>
+          </div>
+          <div class="logo-text" aria-label="Food Facts">
+            <span class="logo-char">F</span>
+            <span class="logo-char">o</span>
+            <span class="logo-char">o</span>
+            <span class="logo-char">d</span>
+            <span class="logo-char">F</span>
+            <span class="logo-char">a</span>
+            <span class="logo-char">c</span>
+            <span class="logo-char">t</span>
+            <span class="logo-char">s</span>
+          </div>
+        </div>
+      </a>
+      <nav class="site-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="contatti.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <header class="page-header">
+      <h1 class="page-title">Sitemap generator</h1>
+      <p class="page-subtitle">
+        Generate a <code>sitemap.xml</code> file for Food Facts. Paste the result into a file named
+        <code>sitemap.xml</code> and upload it to the root of your site.
+      </p>
+    </header>
+
+    <section class="sitemap-layout">
+      <!-- Form -->
+      <div class="contact-box">
+        <h2 style="font-size:1.1rem; margin-bottom:0.75rem;">Sitemap data</h2>
+        <form id="sitemapForm" class="sitemap-form">
+          <label for="smBaseUrl">Base URL</label>
+          <input
+            type="text"
+            id="smBaseUrl"
+            value="https://martasant.github.io"
+          />
+          <p class="sitemap-hint">
+            If you add a custom domain later (e.g. <code>https://foodfacts.blog</code>), update this once.
+          </p>
+
+          <label for="smPaths">Paths (one per line)</label>
+          <textarea
+            id="smPaths"
+            placeholder="Example:
+/
+ /blog.html
+ /contatti.html
+ /post0.html
+ /post1.html
+ /post2.html"
+          ></textarea>
+          <p class="sitemap-hint">
+            You can write paths with or without leading slash. The generator will normalise them.
+          </p>
+
+          <label for="smChangefreq">Change frequency</label>
+          <select id="smChangefreq">
+            <option value="weekly" selected>weekly</option>
+            <option value="daily">daily</option>
+            <option value="monthly">monthly</option>
+            <option value="yearly">yearly</option>
+            <option value="never">never</option>
+          </select>
+
+          <label for="smPriority">Priority (0.0 – 1.0)</label>
+          <input
+            type="text"
+            id="smPriority"
+            value="0.5"
+            placeholder="Example: 0.8"
+          />
+          <p class="sitemap-hint">
+            Optional. If you leave this value, all URLs will use priority <code>0.5</code>. You can change it later by hand in the XML if needed.
+          </p>
+
+          <button type="submit" class="btn" style="margin-top:0.5rem;">
+            Generate sitemap.xml
+          </button>
+        </form>
+      </div>
+
+      <!-- Output -->
+      <div class="contact-box sitemap-output">
+        <h2>Generated sitemap.xml</h2>
+        <textarea id="sitemapOutput" readonly></textarea>
+        <p class="small-note">
+          Save a new file called <code>sitemap.xml</code> in your project root, paste this content,
+          commit &amp; push. Then you can tell Google Search Console about it if you want.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2025 Food Facts. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    function escapeXml(str) {
+      return String(str || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+    }
+
+    document.getElementById("sitemapForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      let baseUrl = (document.getElementById("smBaseUrl").value || "").trim();
+      const pathsRaw = (document.getElementById("smPaths").value || "").trim();
+      const changefreq = (document.getElementById("smChangefreq").value || "").trim() || "weekly";
+      let priority = (document.getElementById("smPriority").value || "").trim();
+
+      if (!baseUrl) {
+        alert("Please provide a base URL.");
+        return;
+      }
+      // normalizza baseUrl
+      if (baseUrl.endsWith("/")) {
+        baseUrl = baseUrl.slice(0, -1);
+      }
+
+      // normalizza priority
+      if (!priority) {
+        priority = "0.5";
+      }
+
+      const lines = pathsRaw.split("\n")
+        .map((l) => l.trim())
+        .filter(Boolean);
+
+      if (lines.length === 0) {
+        alert("Please add at least one path.");
+        return;
+      }
+
+      const today = new Date();
+      const yyyy = today.getFullYear();
+      const mm = String(today.getMonth() + 1).padStart(2, "0");
+      const dd = String(today.getDate()).padStart(2, "0");
+      const lastmod = yyyy + "-" + mm + "-" + dd;
+
+      let urlsXml = "";
+
+      lines.forEach((path) => {
+        let p = path;
+        // se è solo "/" o vuota, usa la root
+        if (p === "/") {
+          p = "";
+        }
+        // togli eventuale baseUrl davanti, se incollato per sbaglio
+        if (p.startsWith(baseUrl)) {
+          p = p.slice(baseUrl.length);
+        }
+        // togli spazi e normalizza lo slash
+        p = p.trim();
+        if (p && !p.startsWith("/")) {
+          p = "/" + p;
+        }
+        const fullUrl = baseUrl + p;
+
+        urlsXml +=
+`  <url>
+    <loc>${escapeXml(fullUrl)}</loc>
+    <lastmod>${lastmod}</lastmod>
+    <changefreq>${escapeXml(changefreq)}</changefreq>
+    <priority>${escapeXml(priority)}</priority>
+  </url>
+`;
+      });
+
+      const xml =
+`<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urlsXml}</urlset>
+`;
+
+      document.getElementById("sitemapOutput").value = xml;
+    });
+  </script>
+</body>
+</html>

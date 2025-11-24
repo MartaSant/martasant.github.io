@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Food Facts – SEO & Meta generator</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .seo-layout {
+      display: grid;
+      grid-template-columns: 1.1fr 1.4fr;
+      gap: 2rem;
+      margin: 1.5rem 0 2rem;
+    }
+
+    .seo-form label {
+      display: block;
+      font-size: 0.9rem;
+      margin-bottom: 0.25rem;
+      font-weight: 500;
+    }
+
+    .seo-form input[type="text"],
+    .seo-form input[type="number"],
+    .seo-form textarea {
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.5rem;
+      border: 1px solid var(--color-border-soft);
+      font-family: inherit;
+      font-size: 0.95rem;
+      background: #fbf6ea;
+      box-sizing: border-box;
+      margin-bottom: 0.8rem;
+    }
+
+    .seo-form textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .seo-hint {
+      font-size: 0.8rem;
+      color: var(--color-muted);
+      margin: -0.2rem 0 0.6rem;
+    }
+
+    .seo-output textarea {
+      width: 100%;
+      min-height: 260px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+        "Liberation Mono", "Courier New", monospace;
+      font-size: 0.8rem;
+      line-height: 1.4;
+      border-radius: 0.5rem;
+      border: 1px solid var(--color-border-soft);
+      padding: 0.5rem 0.75rem;
+      background: #fbf6ea;
+      box-sizing: border-box;
+      white-space: pre;
+      overflow: auto;
+    }
+
+    .seo-output h2 {
+      font-size: 1.05rem;
+    }
+
+    .small-note {
+      font-size: 0.8rem;
+      color: var(--color-muted);
+      margin-top: 0.25rem;
+    }
+
+    @media (max-width: 900px) {
+      .seo-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER come nel resto del sito -->
+  <header class="site-header">
+    <div class="container header-content">
+      <a href="index.html" class="site-logo" aria-label="Food Facts home">
+        <div class="logo">
+          <div class="logo-mark">
+            <span class="ff ff-left">F</span>
+            <span class="ff ff-right">F</span>
+          </div>
+          <div class="logo-text" aria-label="Food Facts">
+            <span class="logo-char">F</span>
+            <span class="logo-char">o</span>
+            <span class="logo-char">o</span>
+            <span class="logo-char">d</span>
+            <span class="logo-char">F</span>
+            <span class="logo-char">a</span>
+            <span class="logo-char">c</span>
+            <span class="logo-char">t</span>
+            <span class="logo-char">s</span>
+          </div>
+        </div>
+      </a>
+      <nav class="site-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="contatti.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <header class="page-header">
+      <h1 class="page-title">SEO & social meta generator</h1>
+      <p class="page-subtitle">
+        Generate the meta tags for your posts (title, description, Open Graph and Twitter) so you can
+        just paste them inside the <code>&lt;head&gt;</code> of each <code>postX.html</code>.
+      </p>
+    </header>
+
+    <section class="seo-layout">
+      <!-- Form -->
+      <div class="contact-box">
+        <h2 style="font-size:1.1rem; margin-bottom:0.75rem;">Page data</h2>
+        <form id="seoForm" class="seo-form">
+          <label for="seoPostId">Post number (optional)</label>
+          <input
+            type="number"
+            id="seoPostId"
+            min="0"
+            step="1"
+            placeholder="Example: 2 (for post2.html)"
+          />
+          <p class="seo-hint">
+            Only used for your own comment, like <code>&lt;!-- Post2 meta --&gt;</code>.
+          </p>
+
+          <label for="seoTitle">Page title</label>
+          <input
+            type="text"
+            id="seoTitle"
+            placeholder='Example: From Field to Fork: Why Your Food’s Story Matters'
+            required
+          />
+
+          <label for="seoDescription">Short description (meta description)</label>
+          <textarea
+            id="seoDescription"
+            placeholder="1–2 sentences that summarise the post. Will be used for search results and link previews."
+          ></textarea>
+
+          <label for="seoSlug">Page path / filename</label>
+          <input
+            type="text"
+            id="seoSlug"
+            placeholder="Example: post2.html"
+          />
+          <p class="seo-hint">
+            For blog posts this is usually something like <code>post2.html</code>. For the home page
+            you can leave it empty or just write <code>index.html</code>.
+          </p>
+
+          <label for="seoBaseUrl">Site base URL</label>
+          <input
+            type="text"
+            id="seoBaseUrl"
+            value="https://martasant.github.io"
+          />
+          <p class="seo-hint">
+            If you later add a custom domain, update this once (e.g.
+            <code>https://foodfacts.blog</code>).
+          </p>
+
+          <label for="seoImage">Image (optional)</label>
+          <input
+            type="text"
+            id="seoImage"
+            placeholder="Example: images/post2-cover.jpg or full URL"
+          />
+          <p class="seo-hint">
+            If you only write a file path, it will be attached to the base URL. If you paste a full
+            <code>https://...</code> URL, it will be used as is.
+          </p>
+
+          <label for="seoImageAlt">Image alt text (optional)</label>
+          <input
+            type="text"
+            id="seoImageAlt"
+            placeholder="Example: Close-up of canned tomatoes on a production line"
+          />
+
+          <button type="submit" class="btn" style="margin-top:0.5rem;">
+            Generate meta tags
+          </button>
+        </form>
+      </div>
+
+      <!-- Output -->
+      <div class="contact-box seo-output">
+        <h2>Generated meta tags</h2>
+        <textarea id="seoOutput" readonly></textarea>
+        <p class="small-note">
+          Paste this block inside the <code>&lt;head&gt;</code> of your <code>postX.html</code>, right
+          under the <code>&lt;meta charset="UTF-8"&gt;</code> line (and adjust if needed).
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2025 Food Facts. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    function escapeHtml(str) {
+      return String(str || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    document.getElementById("seoForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const id = (document.getElementById("seoPostId").value || "").trim();
+      const title = (document.getElementById("seoTitle").value || "").trim();
+      const description = (document.getElementById("seoDescription").value || "").trim();
+      const slugRaw = (document.getElementById("seoSlug").value || "").trim();
+      const baseRaw = (document.getElementById("seoBaseUrl").value || "").trim();
+      const imageRaw = (document.getElementById("seoImage").value || "").trim();
+      const imageAlt = (document.getElementById("seoImageAlt").value || "").trim();
+
+      if (!title) {
+        alert("Please fill at least the page title.");
+        return;
+      }
+
+      // Normalizza base URL
+      let baseUrl = baseRaw || "https://martasant.github.io";
+      if (baseUrl.endsWith("/")) {
+        baseUrl = baseUrl.slice(0, -1);
+      }
+
+      // Normalizza slug
+      let slug = slugRaw;
+      if (slug && slug.startsWith("/")) {
+        slug = slug.slice(1);
+      }
+
+      // Costruisci URL finale
+      const pageUrl = slug ? baseUrl + "/" + slug : baseUrl + "/";
+
+      // Immagine
+      let imageUrl = "";
+      if (imageRaw) {
+        if (imageRaw.startsWith("http://") || imageRaw.startsWith("https://")) {
+          imageUrl = imageRaw;
+        } else {
+          // path relativo → lo attacchiamo alla base
+          const safePath = imageRaw.startsWith("/") ? imageRaw : "/" + imageRaw;
+          imageUrl = baseUrl + safePath;
+        }
+      }
+
+      const escTitle = escapeHtml(title);
+      const escDesc = escapeHtml(description);
+      const escUrl = escapeHtml(pageUrl);
+      const escImg = escapeHtml(imageUrl);
+      const escImgAlt = escapeHtml(imageAlt);
+
+      let comment = "";
+      if (id) {
+        comment = `<!-- Post${id} meta -->\n`;
+      }
+
+      let meta = `${comment}<title>Food Facts - ${escTitle}</title>
+<meta name="description" content="${escDesc}" />
+<link rel="canonical" href="${escUrl}" />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="Food Facts" />
+<meta property="og:title" content="${escTitle}" />
+<meta property="og:description" content="${escDesc}" />
+<meta property="og:url" content="${escUrl}" />`;
+
+      if (imageUrl) {
+        meta += `
+<meta property="og:image" content="${escImg}" />`;
+      }
+
+      if (imageAlt) {
+        meta += `
+<meta property="og:image:alt" content="${escImgAlt}" />`;
+      }
+
+      meta += `
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="${escTitle}" />
+<meta name="twitter:description" content="${escDesc}" />`;
+
+      if (imageUrl) {
+        meta += `
+<meta name="twitter:image" content="${escImg}" />`;
+      }
+
+      document.getElementById("seoOutput").value = meta;
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Food Facts – Posting guide (for Marta)</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Header (same style as the rest of the site) -->
+  <header class="site-header">
+    <div class="container header-content">
+      <a href="index.html" class="site-logo" aria-label="Food Facts home">
+        <div class="logo">
+          <div class="logo-mark">
+            <span class="ff ff-left">F</span>
+            <span class="ff ff-right">F</span>
+          </div>
+          <div class="logo-text" aria-label="Food Facts">
+            <span class="logo-char">F</span>
+            <span class="logo-char">o</span>
+            <span class="logo-char">o</span>
+            <span class="logo-char">d</span>
+            <span class="logo-char">F</span>
+            <span class="logo-char">a</span>
+            <span class="logo-char">c</span>
+            <span class="logo-char">t</span>
+            <span class="logo-char">s</span>
+          </div>
+        </div>
+      </a>
+      <nav class="site-nav">
+        <!-- Non linko questa pagina nel menu così resta “nascosta” -->
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="contatti.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <header class="page-header">
+      <h1 class="page-title">Posting guide · Food Facts</h1>
+      <p class="page-subtitle">
+        A private step-by-step guide for Marta: how to publish a new article, update the blog and home page, add SEO meta tags, and send a newsletter.
+      </p>
+    </header>
+
+    <section class="contact-box" style="margin-bottom: 2rem;">
+      <h2 style="font-size:1.1rem; margin-bottom:0.5rem;">Quick ritual (very short version)</h2>
+      <ol style="margin-left:1.2rem; font-size:0.95rem; line-height:1.6;">
+        <li>Write the post text (title, excerpt, date, categories, meta label, read time).</li>
+        <li>Go to <code>editor.html</code> → generate:
+          <ul style="margin:0.2rem 0 0.4rem 1.1rem;">
+            <li><code>postX.html</code></li>
+            <li>snippet for <code>blog.html</code></li>
+            <li>snippet for <code>index.html</code></li>
+          </ul>
+        </li>
+        <li>Create <code>postX.html</code>, paste full code.</li>
+        <li>Paste the snippets into <code>blog.html</code> and <code>index.html</code>.</li>
+        <li>Go to <code>seo-helper.html</code> → generate meta → paste into <code>postX.html</code> inside <code>&lt;head&gt;</code>.</li>
+        <li>Go to <code>newsletter-helper.html</code> → generate email HTML → paste into MailerLite.</li>
+        <li>Commit + push to GitHub → check the live pages.</li>
+      </ol>
+    </section>
+
+    <section class="contact-box" style="margin-bottom: 2rem;">
+      <h2 style="font-size:1.1rem; margin-bottom:0.5rem;">1. Prepare the post content</h2>
+      <p style="font-size:0.95rem; line-height:1.6;">
+        Before touching any HTML, prepare the content in a text editor (Google Docs, Word, etc.).
+      </p>
+      <ul style="margin-left:1.2rem; font-size:0.95rem; line-height:1.6;">
+        <li><strong>Title</strong> – the main headline of the post.</li>
+        <li><strong>Excerpt</strong> – 1–2 short sentences that summarise the post (used in cards and meta).</li>
+        <li><strong>Date (displayed)</strong> – e.g. <code>November 28, 2025</code>.</li>
+        <li><strong>Meta label</strong> – a small label like <em>Intro</em>, <em>Overproduction</em>, <em>Label deep dive</em>. If you leave it empty, the editor will use the first category.</li>
+        <li><strong>Reading time (optional)</strong> – e.g. <code>12 min read</code>.</li>
+        <li><strong>Categories</strong> – choose among:
+          <ul style="margin-top:0.25rem; margin-left:1.1rem;">
+            <li>Production</li>
+            <li>Waste</li>
+            <li>Sustainability</li>
+            <li>Innovation</li>
+            <li>Consumers</li>
+            <li>Policy</li>
+            <li>Health</li>
+            <li>Opinions</li>
+          </ul>
+        </li>
+        <li><strong>Body</strong> – the full text. Separate paragraphs with a blank line.</li>
+      </ul>
+    </section>
+
+    <section class="contact-box" style="margin-bottom: 2rem;">
+      <h2 style="font-size:1.1rem; margin-bottom:0.5rem;">2. Use <code>editor.html</code> to generate code</h2>
+      <p style="font-size:0.95rem; line-height:1.6;">
+        Open the internal editor page:
+      </p>
+      <ul style="margin-left:1.2rem; font-size:0.95rem; line-height:1.6;">
+        <li>Visit <code>editor.html</code> in the browser (e.g. <code>https://martasant.github.io/editor.html</code>).</li>
+      </ul>
+
+      <h3 style="font-size:1rem; margin-top:0.75rem;">Fields to fill</h3>
+      <ol style="margin-left:1.2rem; font-size:0.95rem; line-height:1.6;">
+        <li><strong>Post number</strong> – choose the next free number:
+          <ul style="margin:0.25rem 0 0.4rem 1.1rem;">
+            <li>If you already have <code>post0.html</code>, <code>post1.html</code>, <code>post2.html</code>, the next one is <code>3</code>.</li>
+            <li>This will create a new file called <code>post3.html</code>.</li>
+          </ul>
+        </li>
+        <li><strong>Title</strong> – paste the post title.</li>
+        <li><strong>Meta label</strong> – e.g. <code>Overproduction</code>, <code>Intro</code>, <code>Label deep dive</code> (or leave empty and it will use the first category).</li>
+        <li><strong>Date</strong> – e.g. <code>November 28, 2025</code>.</li>
+        <li><strong>Estimated reading time</strong> – optional (e.g. <code>12 min read</code>).</li>
+        <li><strong>Categories</strong> – tick all relevant categories. These control the filters in <code>blog.html</code>.</li>
+        <li><strong>Short excerpt</strong> – paste the 1–2 sentence summary.</li>
+        <li><strong>Full post content</strong> – paste the entire article. 
+          <br />Use an empty line between paragraphs. Line breaks inside a paragraph will become <code>&lt;br /&gt;</code> tags.
+        </li>
+      </ol>
+
+      <p style="font-size:0.95rem; line-height:1.6; margin-top:0.5rem;">
+        Then click <strong>Generate code</strong>. The page will show:
+      </p>
+      <ul style="margin-left:1.2rem; font-size:0.95rem; line-height:1.6;">
+        <li><strong>Post HTML file</strong> – full content for <code>postX.html</code>.</li>
+        <li><strong>Blog list snippet</strong> – <code>&lt;article class="post"&gt;</code> block for <code>blog.html</code>, with:
+          <ul style="margin-top:0.25rem; margin-left:1.1rem;">
+            <li>a comment like <code>&lt;!-- Post3 --&gt;</code>,</li>
+            <li>title (not a link),</li>
+            <li>meta line,</li>
+            <li>excerpt,</li>
+            <li>green button “Read the full post”.</li>
+          </ul>
+        </li>
+        <li><strong>Home “Latest posts” snippet</strong> – <code>&lt;article class="post-card"&gt;</code> for the home page:
+          <ul style="margin-top:0.25rem; margin-left:1.1rem;">
+            <li>comment <code>&lt;!-- Post3 --&gt;</code>,</li>
+            <li>title, meta, excerpt,</li>
+            <li>green button “Read the full post”.</li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+
+    <section class="contact-box" style="margin-bottom: 2rem;">
+      <h2 style="font-size:1.1rem; margin-bottom:0.5rem;">3. Create <code>postX.html</code></h2>
+      <ol style="margin-left:1.2rem; font-size:0.95rem; line-height:1.6;">
+        <li>In your project folder, create a new file:
+          <ul style="margin-top:0.25rem; margin-left:1.1rem;">
+            <li>Example: <code>post3.html</code>.</li>
+          </ul>
+        </li>
+        <li>Open the file and paste the entire “Post HTML file” code generated by <code>editor.html</code>.</li>
+        <li>Save the file.</li>
+      </ol>
+      <p style="font-size:0.9rem; color:#7a6a4e; margin-top:0.5rem;">
+        Tip: you can always open an existing post file (like <code>post1.html</code>) to compare and check that the structure feels similar.
+      </p>
+    </section>
+
+    <section class="contact-box" style="margin-bottom: 2rem;">
+      <h2 style="font-size:1.1rem; margin-bottom:0.5rem;">4. Add the post to <code>blog.html</code></h2>
+      <ol style="margin-left:1.2rem; font-size:0.95rem; line-height:1.6;">
+        <li>Open <code>blog.html</code>.</li>
+        <li>Find the block:
+          <pre style="background:#fbf6ea; padding:0.6rem 0.8rem; border-radius:0.5rem; font-size:0.8rem; overflow:auto;">
+&lt;section class="content"&gt;
+  ...
+&lt;/section&gt;
+          </pre>
+        </li>
+        <li>Inside that section, place the new snippet from <code>editor.html</code>:
+          <ul style="margin-top:0.25rem; margin-left:1.1rem;">
+            <li>Paste it above or below the existing posts.</li>
+            <li>Keep posts ordered from newest (top) to oldest (bottom), if you want.</li>
+          </ul>
+        </li>
+      </ol>
+      <p style="font-size:0.9rem; color:#7a6a4e; margin-top:0.5rem;">
+        The categories you selected in the editor are already attached as <code>data-categories</code>, so the filters and search will work automatically.
+      </p>
+    </section>
+
+    <section class="contact-box" style="margin-bottom: 2rem;">
+      <h2 style="font-size:1.1rem; margin-bottom:0.5rem;">5. Add the post to “Latest posts” on <code>index.html</code></h2>
+      <ol style="margin-left:1.2rem; font-size:0.95rem; line-height:1.6;">
+        <li>Open <code>index.html</code>.</li>
+        <li>Find the “Latest posts” section (it contains <code>&lt;article class="post-card"&gt;</code> blocks).</li>
+        <li>Paste the “Home Latest posts” snippet from <code>editor.html</code>:
+          <ul style="margin-top:0.25rem; margin-left:1.1rem;">
+            <li>Example: <code>&lt;!-- Post3 --&gt;</code> followed by <code>&lt;article class="post-card"&gt;...</code>.</li>
+          </ul>
+        </li>
+        <li>If you want to keep the home page clean, you can limit this section to the 3–4 most recent posts:
+          <ul style="margin-top:0.25rem; margin-left:1.1rem;">
+            <li>When you add a new one, you can remove the oldest from this section (but it will remain on <code>blog.html</code>).</li>
+          </ul>
+        </li>
+      </ol>
+    </section>
+
+    <section class="contact-box" style="margin-bottom: 2rem;">
+      <h2 style="font-size:1.1rem; margin-bottom:0.5rem;">6. Add SEO & social meta with <code>seo-helper.html</code></h2>
+      <p style="font-size:0.95rem; line-height:1.6;">
+        The goal: each <code>postX.html</code> should have a clean <code>&lt;title&gt;</code>, a
+        <code>meta description</code> and Open Graph / Twitter tags so links look good when shared.
+      </p>
+
+      <h3 style="font-size:1rem; margin-top:0.75rem;">Steps</h3>
+      <ol style="margin-left:1.2rem; font-size:0.95rem; line-height:1.6;">
+        <li>Open <code>seo-helper.html</code> (e.g. <code>https://martasant.github.io/seo-helper.html</code>).</li>
+        <li>Fill the fields:
+          <ul style="margin-top:0.25rem; margin-left:1.1rem;">
+            <li><strong>Post number</strong> – e.g. <code>3</code> (this is only used for a comment like <code>&lt;!-- Post3 meta --&gt;</code>).</li>
+            <li><strong>Page title</strong> – usually the same as the article title.</li>
+            <li><strong>Short description</strong> – 1–2 sentences, can be similar to the excerpt.</li>
+            <li><strong>Page path</strong> – e.g. <code>post3.html</code>.</li>
+            <li><strong>Site base URL</strong> – usually <code>https://martasant.github.io</code> (one day this can become your custom domain).</li>
+            <li><strong>Image</strong> (optional) – e.g. <code>images/post3-cover.jpg</code> or a full <code>https://</code> URL.</li>
+            <li><strong>Image alt text</strong> (optional) – a short description of the image.</li>
+          </ul>
+        </li>
+        <li>Click <strong>Generate meta tags</strong>.</li>
+        <li>Copy the generated block.</li>
+        <li>Open <code>post3.html</code>, find the <code>&lt;head&gt;</code> section and paste the meta tags right under:
+          <pre style="background:#fbf6ea; padding:0.6rem 0.8rem; border-radius:0.5rem; font-size:0.8rem; overflow:auto;">
+&lt;meta charset="UTF-8" /&gt;
+          </pre>
+        </li>
+      </ol>
+    </section>
+
+    <section class="contact-box" style="margin-bottom: 2rem;">
+      <h2 style="font-size:1.1rem; margin-bottom:0.5rem;">7. Create the newsletter with <code>newsletter-helper.html</code></h2>
+      <p style="font-size:0.95rem; line-height:1.6;">
+        This step prepares a nice HTML email in Food Facts style. You’ll paste it into MailerLite or another email platform.
+      </p>
+
+      <h3 style="font-size:1rem; margin-top:0.75rem;">Steps</h3>
+      <ol style="margin-left:1.2rem; font-size:0.95rem; line-height:1.6;">
+        <li>Open <code>newsletter-helper.html</code> (e.g. <code>https://martasant.github.io/newsletter-helper.html</code>).</li>
+        <li>Fill the fields:
+          <ul style="margin-top:0.25rem; margin-left:1.1rem;">
+            <li><strong>Email subject</strong> – subject line for the inbox.</li>
+            <li><strong>Preheader</strong> – small line next to the subject (optional but useful).</li>
+            <li><strong>Newsletter title (inside email)</strong> – big title at the top of the email.</li>
+            <li><strong>Intro paragraph</strong> – a short intro.</li>
+            <li><strong>Main content</strong> – body of the email. 
+              <br />Use blank lines between paragraphs.</li>
+            <li><strong>Optional bullet list</strong> – one bullet per line.</li>
+            <li><strong>CTA button label</strong> – e.g. <code>Read the full article</code>.</li>
+            <li><strong>CTA button URL</strong> – link to the live post, e.g. <code>https://martasant.github.io/post3.html</code>.</li>
+            <li><strong>P.S.</strong> – closing note (optional).</li>
+          </ul>
+        </li>
+        <li>Click <strong>Generate email HTML</strong>.</li>
+        <li>Copy the entire HTML from the output box.</li>
+      </ol>
+
+      <h3 style="font-size:1rem; margin-top:0.75rem;">Use it in MailerLite</h3>
+      <ul style="margin-left:1.2rem; font-size:0.95rem; line-height:1.6;">
+        <li>Create a new campaign in MailerLite.</li>
+        <li>Set the same <strong>subject</strong> and <strong>preheader</strong> you used in the helper.</li>
+        <li>Choose an editor option that allows custom HTML (or an HTML block).</li>
+        <li>Paste the generated email HTML.</li>
+        <li>Replace the unsubscribe line with MailerLite’s official unsubscribe block if required.</li>
+      </ul>
+    </section>
+
+    <section class="contact-box" style="margin-bottom: 2rem;">
+      <h2 style="font-size:1.1rem; margin-bottom:0.5rem;">8. Commit, push and check</h2>
+      <ol style="margin-left:1.2rem; font-size:0.95rem; line-height:1.6;">
+        <li>Make sure you have saved all updated files:
+          <ul style="margin-top:0.25rem; margin-left:1.1rem;">
+            <li><code>postX.html</code></li>
+            <li><code>blog.html</code></li>
+            <li><code>index.html</code></li>
+            <li>any new images</li>
+          </ul>
+        </li>
+        <li>In your Git tool or terminal:
+          <ul style="margin-top:0.25rem; margin-left:1.1rem;">
+            <li><code>git add .</code></li>
+            <li><code>git commit -m "Add postX: [short title]"</code></li>
+            <li><code>git push</code></li>
+          </ul>
+        </li>
+        <li>Wait a short moment for GitHub Pages to update.</li>
+        <li>Check in the browser:
+          <ul style="margin-top:0.25rem; margin-left:1.1rem;">
+            <li><code>https://martasant.github.io/postX.html</code> – the new article.</li>
+            <li><code>https://martasant.github.io/blog.html</code> – appears in the list and filters.</li>
+            <li><code>https://martasant.github.io/</code> – appears in Latest posts if you added it.</li>
+          </ul>
+        </li>
+      </ol>
+    </section>
+
+    <section class="contact-box" style="margin-bottom: 2rem;">
+      <h2 style="font-size:1.1rem; margin-bottom:0.5rem;">Optional notes & reminders</h2>
+      <ul style="margin-left:1.2rem; font-size:0.95rem; line-height:1.6;">
+        <li><strong>Caching</strong> – if a page doesn’t look updated:
+          <ul style="margin-top:0.25rem; margin-left:1.1rem;">
+            <li>Use a “hard refresh” in the browser:
+              <br /><code>Ctrl + F5</code> (Windows) or <code>Cmd + Shift + R</code> (Mac).</li>
+          </ul>
+        </li>
+        <li><strong>Categories logic</strong> – in <code>blog.html</code>, category filters use AND logic:
+          <ul style="margin-top:0.25rem; margin-left:1.1rem;">
+            <li>If you select <em>Production</em> + <em>Policy</em>, a post must have both categories to appear.</li>
+          </ul>
+        </li>
+        <li><strong>Private helper pages</strong> – pages like <code>editor.html</code>, <code>seo-helper.html</code>, <code>newsletter-helper.html</code>, <code>posting.html</code>:
+          <ul style="margin-top:0.25rem; margin-left:1.1rem;">
+            <li>are public if someone knows the URL,</li>
+            <li>but they are not linked in the main navigation, so they are effectively “hidden” for normal visitors.</li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2025 Food Facts. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>
