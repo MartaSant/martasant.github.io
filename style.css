@@ -203,6 +203,60 @@ img {
   max-width: 320px;
 }
 
+/* Foto + overlay bio Marta */
+
+.hero-photo-card {
+  position: relative;
+  display: inline-block;
+  border-radius: 1.5rem;
+  overflow: hidden;
+}
+
+.hero-photo-card .hero-photo {
+  display: block;
+}
+
+.hero-photo-overlay {
+  position: absolute;
+  inset: 0;
+  padding: 0.9rem 1rem;
+  border-radius: 1.5rem;
+  background:
+    radial-gradient(circle at top left, rgba(132, 198, 123, 0.32), transparent 55%),
+    rgba(16, 12, 6, 0.9);
+  color: #fdfaf4;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+  transition:
+    opacity 180ms ease-out,
+    transform 180ms ease-out;
+  display: flex;
+  flex-direction: column;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  overflow-y: auto;
+}
+
+/* titolo "About Marta" nell’overlay */
+.hero-photo-overlay h3 {
+  font-size: 0.9rem;
+  margin-bottom: 0.35rem;
+}
+
+/* spaziatura paragrafi nella bio */
+.hero-photo-overlay p + p {
+  margin-top: 0.35rem;
+}
+
+/* mostra overlay al passaggio del mouse / focus */
+.hero-photo-card:hover .hero-photo-overlay,
+.hero-photo-card:focus-within .hero-photo-overlay {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
 /* hero text (used on other pages if needed) */
 
 .hero-title {
