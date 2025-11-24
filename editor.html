@@ -426,8 +426,9 @@
 </body>
 </html>`;
 
-      // 2) Snippet per blog.html (uguale stile agli altri post)
-      const blogSnippet = `<article
+      // 2) Snippet per blog.html (uguale stile agli altri post) + commento <!-- PostX -->
+      const blogSnippet = `<!-- Post${id} -->
+<article
   class="post"
   data-categories="${categoriesEsc}"
 >
@@ -437,13 +438,13 @@
   <a href="${fileName}" class="btn">Read the full post</a>
 </article>`;
 
-      // 3) Snippet per home (Latest posts)
-      const homeSnippet = `<article class="post-card">
-  <h3 class="post-title">
-    <a href="${fileName}">${titleEsc}</a>
-  </h3>
+      // 3) Snippet per home (Latest posts) con bottone + commento <!-- PostX -->
+      const homeSnippet = `<!-- Post${id} -->
+<article class="post-card">
+  <h3 class="post-title">${titleEsc}</h3>
   <p class="post-meta">${blogMetaEsc}</p>
   <p class="post-excerpt">${excerptEsc}</p>
+  <a href="${fileName}" class="btn">Read the full post</a>
 </article>`;
 
       document.getElementById("postOutput").value = postHtml;
