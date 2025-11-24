@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Food Facts - Blog</title>
-  <!-- notare ?v=3 per forzare il ricaricamento del CSS -->
   <link rel="stylesheet" href="style.css?v=3" />
 </head>
 <body>
@@ -129,7 +128,6 @@
     </div>
   </footer>
 
-  <!-- Script per ricerca + filtri per categoria -->
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const searchInput = document.getElementById("blog-search");
@@ -165,14 +163,14 @@
 
         posts.forEach((post) => {
           const text = normalize(post.textContent);
-          const postCats = getPostCategories(post);
+          const postCats = new Set(getPostCategories(post));
 
           const matchesQuery = q === "" || text.includes(q);
 
-          // AND logica: il post deve avere tutte le categorie selezionate
+          // AND logico: il post deve contenere *tutte* le categorie selezionate
           const matchesCategories =
             selected.length === 0 ||
-            selected.every((cat) => postCats.includes(cat));
+            selected.every((cat) => postCats.has(cat));
 
           const show = matchesQuery && matchesCategories;
 
@@ -185,7 +183,6 @@
         }
       }
 
-      // Ricerca testuale
       if (searchInput) {
         searchInput.addEventListener("input", function () {
           state.query = normalize(searchInput.value);
@@ -193,17 +190,14 @@
         });
       }
 
-      // Filtri per categoria (multi-selezione, toggle)
       categoryButtons.forEach((btn) => {
         const cat = normalize(btn.dataset.category || btn.textContent);
 
         btn.addEventListener("click", function () {
           if (state.selectedCategories.has(cat)) {
-            // deseleziona
             state.selectedCategories.delete(cat);
             btn.classList.remove("active");
           } else {
-            // seleziona
             state.selectedCategories.add(cat);
             btn.classList.add("active");
           }
@@ -211,10 +205,8 @@
         });
       });
 
-      // Primo rendering con nessun filtro
       applyFilters();
     });
   </script>
 </body>
 </html>
-
