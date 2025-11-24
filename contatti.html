@@ -40,51 +40,88 @@
     <header class="page-header">
       <h1 class="page-title">Contact</h1>
       <p class="page-subtitle">
-        Whether you're a curious reader, a food producer, or a brand working with food,
-        feel free to reach out.
+        Questions, ideas, or something you’d like to understand better about how food is made?
+        I’d love to hear from you.
       </p>
     </header>
 
-    <div class="contact-wrapper">
-      <section class="contact-box">
-        <h3>Where you can find me</h3>
+    <section class="contact-wrapper">
+      <div class="contact-box">
+        <h3>Get in touch</h3>
         <p>
-          📧 Email: <a href="mailto:your.email@example.com">your.email@example.com</a>
+          You can use the form on this page to send me a message about:
         </p>
+        <ul style="margin: 0.5rem 0 0.75rem 1.1rem; font-size: 0.95rem;">
+          <li>topics you’d like to see on Food Facts,</li>
+          <li>questions about food production, labels or waste,</li>
+          <li>collaborations or projects.</li>
+        </ul>
         <p>
-          📸 Instagram: <strong>@your_profile</strong>
+          I read every message, even if I can’t always reply immediately.
         </p>
-        <p>
-          🧪 Topics I love: food labels, production processes, food science basics,
-          and how to make information about food more human and gentle.
+        <p style="margin-top: 0.75rem; font-size: 0.9rem; color: var(--color-muted);">
+          Prefer email? You can also write to:
+          <br />
+          <strong>youremail@example.com</strong>
+          <!-- sostituisci con il tuo vero indirizzo -->
         </p>
-        <p style="margin-top: 0.75rem;">
-          You can replace these details with your real email, social media,
-          or any other way you’d like people to contact you.
-        </p>
-      </section>
+      </div>
 
-      <section class="contact-box">
+      <div class="contact-box">
         <h3>Send me a message</h3>
-        <!-- Visual-only form; needs backend to actually send -->
-        <form class="contact-form">
-          <label for="name">Name</label>
-          <input type="text" id="name" name="name" placeholder="Your name" />
+        <p
+          style="
+            margin: 0.35rem 0 0.9rem;
+            font-size: 0.85rem;
+            color: var(--color-muted);
+          "
+        >
+          If you would like a reply, please include your email address within the message you send.
+        </p>
 
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" placeholder="your-email@example.com" />
+        <form
+          class="contact-form"
+          action="https://formspree.io/f/xnnreonn"
+          method="POST"
+        >
+          <label for="name">Name (optional)</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Your name (if you’d like to share it)"
+          />
 
           <label for="message">Message</label>
-          <textarea id="message" name="message" placeholder="Tell me what you’d like to talk about..."></textarea>
+          <textarea
+            id="message"
+            name="message"
+            placeholder="What would you like to talk about?"
+            required
+          ></textarea>
+
+          <!-- Oggetto dell'email che riceverai -->
+          <input
+            type="hidden"
+            name="_subject"
+            value="New message from Food Facts contact form"
+          />
 
           <button type="submit" class="btn">Send</button>
         </form>
-        <p style="font-size: 0.8rem; color: var(--color-muted); margin-top: 0.5rem;">
-          Note: to actually send this form, we’ll need to connect it to a service
-          or a small backend later.
+
+        <p
+          style="
+            font-size: 0.8rem;
+            color: var(--color-muted);
+            margin-top: 0.5rem;
+          "
+        >
+          You don’t have to share any contact details if you don’t want to.
+          Your message will still reach me through this form.
         </p>
-      </section>
-    </div>
+      </div>
+    </section>
   </main>
 
   <footer class="site-footer">

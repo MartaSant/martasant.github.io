@@ -258,7 +258,7 @@ img {
   gap: 1.25rem;
 }
 
-/* Post card */
+/* Post card (home) */
 
 .post-card {
   background: var(--color-surface);
@@ -349,7 +349,42 @@ img {
   background: #fbf6ea;
 }
 
-/* Blog posts list */
+/* Categories pills in sidebar */
+
+.category-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.category-pill {
+  font-size: 0.85rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-border-soft);
+  background: #fbf6ea;
+  cursor: pointer;
+  outline: none;
+  transition:
+    background-color 150ms ease-out,
+    border-color 150ms ease-out,
+    box-shadow 150ms ease-out,
+    transform 120ms ease-out;
+}
+
+.category-pill:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-1px);
+}
+
+.category-pill.active {
+  background: var(--color-primary);
+  color: #103014;
+  border-color: var(--color-primary-dark);
+  box-shadow: 0 4px 10px rgba(90, 162, 87, 0.35);
+}
+
+/* Blog posts list (page blog + post pages) */
 
 .post {
   background: var(--color-surface);
@@ -358,6 +393,15 @@ img {
   border: 1px solid var(--color-border-soft);
   box-shadow: 0 8px 22px rgba(90, 162, 87, 0.18);
   margin-bottom: 1.25rem;
+}
+
+/* Messaggio "nessun risultato" */
+
+.no-results-message {
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  color: var(--color-muted);
+  font-style: italic;
 }
 
 /* Contact page */

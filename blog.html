@@ -40,52 +40,79 @@
     <header class="page-header">
       <h1 class="page-title">Articles</h1>
       <p class="page-subtitle">
-        Gentle deep dives into nutrition, food production, and how everyday foods are made.
+        Gentle deep dives into food production, labels, overproduction and how everyday foods are made.
       </p>
     </header>
 
     <div class="main-layout">
       <section class="content">
-        <!-- Post1: sopra -->
-        <article class="post">
-          <h2 class="post-title">The Hidden Cost of Cheap Food: Inside the Problem of Overproduction</h2>
-          <p class="post-meta">Overproduction • November 20, 2025</p>
+        <!-- Post1 -->
+        <article
+          class="post"
+          data-categories="Waste,Sustainability,Opinions,Health,Consumers"
+        >
+          <h2 class="post-title">
+            The Hidden Cost of Cheap Food: Inside the Problem of Overproduction
+          </h2>
+          <p class="post-meta">Overproduction • November 22, 2025</p>
           <p class="post-excerpt">
-            Promotions like “3×2” and ultra-cheap prices look like great deals,
-            but they are part of a system that often produces more than we can eat,
-            with hidden environmental, social and nutritional costs. This article
-            opens the black box of overproduction.
+            Promotions and very low prices may look like a celebration of abundance, but they are often
+            connected to structural overproduction, waste and hidden costs for the environment,
+            producers and consumers.
           </p>
           <a href="post1.html" class="btn">Read the full post</a>
         </article>
 
-        <!-- Post0: sotto -->
-        <article class="post">
+        <!-- Post0 -->
+        <article
+          class="post"
+          data-categories="Production,Waste,Sustainability,Innovation,Consumers,Policy,Health,Opinions"
+        >
           <h2 class="post-title">From Field to Fork: Why Your Food’s Story Matters</h2>
           <p class="post-meta">Intro • November 20, 2025</p>
           <p class="post-excerpt">
-            A manifesto for Food Facts: why this blog exists, how it bridges the
-            gap between food systems and everyday life, and why knowing the story
-            behind your food can make your choices calmer and more informed.
+            A manifesto-style introduction to Food Facts: why this blog exists, why food systems are more
+            complex than simple slogans, and how understanding the story behind your food can change
+            everyday choices.
           </p>
           <a href="post0.html" class="btn">Read the full post</a>
         </article>
+
+        <!-- Messaggio "nessun risultato" -->
+        <p id="no-results" class="no-results-message" style="display: none;">
+          No articles matched your search and filters. Try a different keyword
+          or deselect some categories.
+        </p>
       </section>
 
       <aside class="sidebar">
         <section class="widget">
           <h3>Search the blog</h3>
-          <input type="text" placeholder="Search a topic..." />
+          <input
+            type="text"
+            id="blog-search"
+            placeholder="Search a topic..."
+            aria-label="Search articles"
+          />
         </section>
 
         <section class="widget">
           <h3>Categories</h3>
-          <ul>
-            <li><a href="#">Food labels</a></li>
-            <li><a href="#">Production processes</a></li>
-            <li><a href="#">Food science basics</a></li>
-            <li><a href="#">Everyday nutrition</a></li>
-          </ul>
+          <!--
+            Per aggiungere nuove categorie in futuro:
+            - aggiungi un nuovo <button class="category-pill" data-category="NewCategory">NewCategory</button>
+            - usa lo stesso nome nella data-categories dei post
+          -->
+          <div class="category-list" id="category-list">
+            <button type="button" class="category-pill" data-category="Production">Production</button>
+            <button type="button" class="category-pill" data-category="Waste">Waste</button>
+            <button type="button" class="category-pill" data-category="Sustainability">Sustainability</button>
+            <button type="button" class="category-pill" data-category="Innovation">Innovation</button>
+            <button type="button" class="category-pill" data-category="Consumers">Consumers</button>
+            <button type="button" class="category-pill" data-category="Policy">Policy</button>
+            <button type="button" class="category-pill" data-category="Health">Health</button>
+            <button type="button" class="category-pill" data-category="Opinions">Opinions</button>
+          </div>
         </section>
 
         <section class="widget">
@@ -105,5 +132,92 @@
       <p>&copy; 2025 Food Facts. All rights reserved.</p>
     </div>
   </footer>
+
+  <!-- Script per ricerca + filtri per categoria -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const searchInput = document.getElementById("blog-search");
+      const posts = Array.from(document.querySelectorAll(".content .post"));
+      const noResults = document.getElementById("no-results");
+      const categoryButtons = Array.from(
+        document.querySelectorAll(".category-pill")
+      );
+
+      if (posts.length === 0) return;
+
+      function normalize(str) {
+        return (str || "").toLowerCase().trim();
+      }
+
+      function getPostCategories(post) {
+        const raw = post.dataset.categories || "";
+        return raw
+          .split(",")
+          .map((c) => normalize(c))
+          .filter(Boolean);
+      }
+
+      const state = {
+        query: "",
+        selectedCategories: new Set(),
+      };
+
+      function applyFilters() {
+        const q = state.query;
+        const selected = Array.from(state.selectedCategories);
+        let visibleCount = 0;
+
+        posts.forEach((post) => {
+          const text = normalize(post.textContent);
+          const postCats = getPostCategories(post);
+
+          const matchesQuery = q === "" || text.includes(q);
+
+          // AND logica: il post deve avere tutte le categorie selezionate
+          const matchesCategories =
+            selected.length === 0 ||
+            selected.every((cat) => postCats.includes(cat));
+
+          const show = matchesQuery && matchesCategories;
+
+          post.style.display = show ? "" : "none";
+          if (show) visibleCount++;
+        });
+
+        if (noResults) {
+          noResults.style.display = visibleCount === 0 ? "block" : "none";
+        }
+      }
+
+      // Ricerca testuale
+      if (searchInput) {
+        searchInput.addEventListener("input", function () {
+          state.query = normalize(searchInput.value);
+          applyFilters();
+        });
+      }
+
+      // Filtri per categoria (multi-selezione, toggle)
+      categoryButtons.forEach((btn) => {
+        const cat = normalize(btn.dataset.category || btn.textContent);
+
+        btn.addEventListener("click", function () {
+          if (state.selectedCategories.has(cat)) {
+            // deseleziona
+            state.selectedCategories.delete(cat);
+            btn.classList.remove("active");
+          } else {
+            // seleziona
+            state.selectedCategories.add(cat);
+            btn.classList.add("active");
+          }
+          applyFilters();
+        });
+      });
+
+      // Primo rendering con nessun filtro
+      applyFilters();
+    });
+  </script>
 </body>
 </html>
