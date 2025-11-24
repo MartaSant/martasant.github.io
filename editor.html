@@ -6,7 +6,7 @@
   <title>Food Facts – Post generator (for Marta)</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    /* Piccole aggiunte solo per questa pagina */
+    /* Extra styling solo per questa pagina */
     .editor-layout {
       display: grid;
       grid-template-columns: 1.2fr 1.3fr;
@@ -183,7 +183,7 @@
           <input
             type="text"
             id="postDate"
-            placeholder="Example: November 25, 2025"
+            placeholder="Example: November 24, 2025"
           />
 
           <label for="postReadTime">Estimated reading time (optional)</label>
@@ -295,85 +295,75 @@
       return escapeHtml(str).replace(/"/g, "&quot;");
     }
 
-    document
-      .getElementById("postForm")
-      .addEventListener("submit", function (e) {
-        e.preventDefault();
+    document.getElementById("postForm").addEventListener("submit", function (e) {
+      e.preventDefault();
 
-        const id = document.getElementById("postId").value.trim();
-        const title = document.getElementById("postTitle").value.trim();
-        const date = document.getElementById("postDate").value.trim();
-        const readTime = document
-          .getElementById("postReadTime")
-          .value.trim();
-        const excerpt = document.getElementById("postExcerpt").value.trim();
-        const contentRaw = document.getElementById("postContent").value.trim();
-        let metaLabel = document
-          .getElementById("postMetaLabel")
-          .value.trim();
+      const id = document.getElementById("postId").value.trim();
+      const title = document.getElementById("postTitle").value.trim();
+      const date = document.getElementById("postDate").value.trim();
+      const readTime = document.getElementById("postReadTime").value.trim();
+      const excerpt = document.getElementById("postExcerpt").value.trim();
+      const contentRaw = document.getElementById("postContent").value.trim();
+      let metaLabel = document.getElementById("postMetaLabel").value.trim();
 
-        if (!id || !title || !contentRaw) {
-          alert("Please fill at least: post number, title and content.");
-          return;
-        }
+      if (!id || !title || !contentRaw) {
+        alert("Please fill at least: post number, title and content.");
+        return;
+      }
 
-        const categoryInputs = document.querySelectorAll(
-          'input[name="categories"]:checked'
-        );
-        const categoryKeys = Array.from(categoryInputs).map(
-          (el) => el.value
-        );
-        const categoriesHuman = categoryKeys.map(
-          (c) => CATEGORY_LABELS[c] || c
-        );
-        const categoriesAttr = categoriesHuman.join(",");
+      const categoryInputs = document.querySelectorAll(
+        'input[name="categories"]:checked'
+      );
+      const categoryKeys = Array.from(categoryInputs).map((el) => el.value);
+      const categoriesHuman = categoryKeys.map(
+        (c) => CATEGORY_LABELS[c] || c
+      );
+      const categoriesAttr = categoriesHuman.join(",");
 
-        if (!metaLabel && categoriesHuman.length > 0) {
-          metaLabel = categoriesHuman[0];
-        }
+      if (!metaLabel && categoriesHuman.length > 0) {
+        metaLabel = categoriesHuman[0];
+      }
 
-        const postMetaPieces = [];
-        const blogMetaPieces = [];
+      const postMetaPieces = [];
+      const blogMetaPieces = [];
 
-        if (metaLabel) {
-          postMetaPieces.push(metaLabel);
-          blogMetaPieces.push(metaLabel);
-        }
-        if (date) {
-          postMetaPieces.push(date);
-          blogMetaPieces.push(date);
-        }
-        if (readTime) {
-          postMetaPieces.push(readTime);
-        }
+      if (metaLabel) {
+        postMetaPieces.push(metaLabel);
+        blogMetaPieces.push(metaLabel);
+      }
+      if (date) {
+        postMetaPieces.push(date);
+        blogMetaPieces.push(date);
+      }
+      if (readTime) {
+        postMetaPieces.push(readTime);
+      }
 
-        const postMetaText = postMetaPieces.join(" • ");
-        const blogMetaText = blogMetaPieces.join(" • ");
+      const postMetaText = postMetaPieces.join(" • ");
+      const blogMetaText = blogMetaPieces.join(" • ");
 
-        // Trasforma il testo in paragrafi: blocchi separati da una riga vuota
-        const blocks = contentRaw
-          .split(/\n\s*\n/)
-          .map((b) => b.trim())
-          .filter(Boolean);
-        const postBodyHtml = blocks
-          .map(
-            (b) =>
-              "<p>" +
-              escapeHtml(b).replace(/\n/g, "<br />") +
-              "</p>"
-          )
-          .join("\n      ");
+      // Paragrafi: blocchi separati da una riga vuota
+      const blocks = contentRaw
+        .split(/\n\s*\n/)
+        .map((b) => b.trim())
+        .filter(Boolean);
+      const postBodyHtml = blocks
+        .map(
+          (b) =>
+            "<p>" + escapeHtml(b).replace(/\n/g, "<br />") + "</p>"
+        )
+        .join("\n      ");
 
-        const fileName = "post" + id + ".html";
+      const fileName = "post" + id + ".html";
 
-        const titleEsc = escapeHtml(title);
-        const postMetaEsc = escapeHtml(postMetaText);
-        const blogMetaEsc = escapeHtml(blogMetaText);
-        const excerptEsc = escapeHtml(excerpt);
-        const categoriesEsc = escapeAttr(categoriesAttr);
+      const titleEsc = escapeHtml(title);
+      const postMetaEsc = escapeHtml(postMetaText);
+      const blogMetaEsc = escapeHtml(blogMetaText);
+      const excerptEsc = escapeHtml(excerpt);
+      const categoriesEsc = escapeAttr(categoriesAttr);
 
-        // 1) Post HTML completo
-        const postHtml = `<!DOCTYPE html>
+      // 1) Post HTML completo
+      const postHtml = `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -436,8 +426,8 @@
 </body>
 </html>`;
 
-        // 2) Snippet per blog.html (stesso stile degli altri post)
-        const blogSnippet = `<article
+      // 2) Snippet per blog.html (uguale stile agli altri post)
+      const blogSnippet = `<article
   class="post"
   data-categories="${categoriesEsc}"
 >
@@ -447,8 +437,8 @@
   <a href="${fileName}" class="btn">Read the full post</a>
 </article>`;
 
-        // 3) Snippet per home (Latest posts)
-        const homeSnippet = `<article class="post-card">
+      // 3) Snippet per home (Latest posts)
+      const homeSnippet = `<article class="post-card">
   <h3 class="post-title">
     <a href="${fileName}">${titleEsc}</a>
   </h3>
@@ -456,10 +446,10 @@
   <p class="post-excerpt">${excerptEsc}</p>
 </article>`;
 
-        document.getElementById("postOutput").value = postHtml;
-        document.getElementById("blogOutput").value = blogSnippet;
-        document.getElementById("homeOutput").value = homeSnippet;
-      });
+      document.getElementById("postOutput").value = postHtml;
+      document.getElementById("blogOutput").value = blogSnippet;
+      document.getElementById("homeOutput").value = homeSnippet;
+    });
   </script>
 </body>
 </html>
