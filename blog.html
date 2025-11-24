@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Food Facts - Blog</title>
+  <!-- uso ?v=3 solo per sicurezza cache CSS -->
   <link rel="stylesheet" href="style.css?v=3" />
 </head>
 <body>
@@ -49,30 +50,8 @@
         <!-- Post1 -->
         <article
           class="post"
-          data-categories="Waste,Sustainability,Opinions,Health,Consumers"
+          data-categories="Production,Waste,Sustainability,Opinions,Health,Consumers"
         >
-
-          <article class="post"
-  data-title="prova"
-  data-categories="opinions">
-  <h2 class="post-title">
-    <a href="post2.html">prova</a>
-  </h2>
-  <p class="post-meta">25 november 2025 · Opinions · instant</p>
-  <p class="post-excerpt">Test</p>
-
-            <article class="post"
-  data-title="prova"
-  data-categories="opinions">
-  <h2 class="post-title">
-    <a href="post2.html">prova</a>
-  </h2>
-  <p class="post-meta">25 november 2025 · Opinions · instant</p>
-  <p class="post-excerpt">Test</p>
-</article>
-            
-</article>
-          
           <h2 class="post-title">
             The Hidden Cost of Cheap Food: Inside the Problem of Overproduction
           </h2>
@@ -150,6 +129,7 @@
     </div>
   </footer>
 
+  <!-- Script per ricerca + filtri per categoria (AND logico tra categorie) -->
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const searchInput = document.getElementById("blog-search");
@@ -205,6 +185,7 @@
         }
       }
 
+      // Ricerca testuale
       if (searchInput) {
         searchInput.addEventListener("input", function () {
           state.query = normalize(searchInput.value);
@@ -212,14 +193,17 @@
         });
       }
 
+      // Filtri per categoria (multi-selezione, toggle)
       categoryButtons.forEach((btn) => {
         const cat = normalize(btn.dataset.category || btn.textContent);
 
         btn.addEventListener("click", function () {
           if (state.selectedCategories.has(cat)) {
+            // deseleziona
             state.selectedCategories.delete(cat);
             btn.classList.remove("active");
           } else {
+            // seleziona
             state.selectedCategories.add(cat);
             btn.classList.add("active");
           }
@@ -227,10 +211,9 @@
         });
       });
 
+      // Primo rendering con nessun filtro
       applyFilters();
     });
   </script>
 </body>
 </html>
-
-
