@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -5,7 +6,7 @@
   <title>Food Facts - Blog</title>
   <!-- uso ?v=3 solo per sicurezza cache CSS -->
   <link rel="stylesheet" href="style.css?v=3" />
-<link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
 </head>
 <body>
 <header class="site-header">
@@ -39,35 +40,37 @@
 </header>
 
   <main class="container">
-    <header class="page-header">
+    <header class="page-header reveal-on-scroll">
       <h1 class="page-title">Articles</h1>
       <p class="page-subtitle">
         Gentle deep dives into food production, labels, overproduction and how everyday foods are made.
       </p>
     </header>
 
-    <div class="main-layout">
+    <div class="main-layout reveal-on-scroll">
       <section class="content">
-<!-- Post3 -->
-<article
-  class="post"
-  data-categories="Health"
->
-  <h2 class="post-title">Quarto post</h2>
-  <p class="post-meta">Testing • November 24 2025</p>
-  <p class="post-excerpt">Estratto del quarto post</p>
-  <a href="post3.html" class="btn">Read the full post</a>
-</article>
-      <!-- Post2 -->
-<article
-  class="post"
-  data-categories="Opinions"
->
-  <h2 class="post-title">Terzo</h2>
-  <p class="post-meta">cazzeggio • giorno del giudizio</p>
-  <p class="post-excerpt">Boom!</p>
-  <a href="post2.html" class="btn">Read the full post</a>
-</article>
+        <!-- Post3 -->
+        <article
+          class="post"
+          data-categories="Health"
+        >
+          <h2 class="post-title">Quarto post</h2>
+          <p class="post-meta">Testing • November 24 2025</p>
+          <p class="post-excerpt">Estratto del quarto post</p>
+          <a href="post3.html" class="btn">Read the full post</a>
+        </article>
+
+        <!-- Post2 -->
+        <article
+          class="post"
+          data-categories="Opinions"
+        >
+          <h2 class="post-title">Terzo</h2>
+          <p class="post-meta">cazzeggio • giorno del giudizio</p>
+          <p class="post-excerpt">Boom!</p>
+          <a href="post2.html" class="btn">Read the full post</a>
+        </article>
+
         <!-- Post1 -->
         <article
           class="post"
@@ -144,25 +147,28 @@
     </div>
   </main>
 
-<footer class="site-footer">
-  <div class="container">
-    <p>© 2025 Food Facts. All rights reserved.</p>
-    <p>
-      <span aria-hidden="true" style="margin-right:0.25rem;">📷</span>
-      <a href="https://instagram.com/martasanclaire" target="_blank" rel="noopener">
-        Instagram
-      </a>
-      ·
-      <span aria-hidden="true" style="margin-right:0.25rem;">✉️</span>
-      <a href="contatti.html#newsletter">Newsletter</a>
-      ·
-      <span aria-hidden="true" style="margin-right:0.25rem;">🧜‍♀️</span>
-      <a href="privacy.html">Privacy &amp; data</a>
-    </p>
-  </div>
-</footer>
+  <!-- Back to top button -->
+  <button id="back-to-top" aria-label="Back to top">
+    ↑
+  </button>
 
-
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2025 Food Facts. All rights reserved.</p>
+      <p>
+        <span aria-hidden="true" style="margin-right:0.25rem;">📷</span>
+        <a href="https://instagram.com/martasanclaire" target="_blank" rel="noopener">
+          Instagram
+        </a>
+        ·
+        <span aria-hidden="true" style="margin-right:0.25rem;">✉️</span>
+        <a href="contatti.html#newsletter">Newsletter</a>
+        ·
+        <span aria-hidden="true" style="margin-right:0.25rem;">🧜‍♀️</span>
+        <a href="privacy.html">Privacy &amp; data</a>
+      </p>
+    </div>
+  </footer>
 
   <!-- Script per ricerca + filtri per categoria (AND logico tra categorie) -->
   <script>
@@ -250,7 +256,50 @@
       applyFilters();
     });
   </script>
+
+  <!-- Script per reveal-on-scroll + back-to-top -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      /* --- Reveal on scroll --- */
+      const revealEls = document.querySelectorAll(".reveal-on-scroll");
+
+      if ("IntersectionObserver" in window) {
+        const observer = new IntersectionObserver(
+          (entries, obs) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-visible");
+                obs.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.15 }
+        );
+
+        revealEls.forEach((el) => observer.observe(el));
+      } else {
+        // browser vecchi
+        revealEls.forEach((el) => el.classList.add("is-visible"));
+      }
+
+      /* --- Back to top --- */
+      const backToTop = document.getElementById("back-to-top");
+
+      if (backToTop) {
+        window.addEventListener("scroll", function () {
+          if (window.scrollY > 400) {
+            backToTop.classList.add("visible");
+          } else {
+            backToTop.classList.remove("visible");
+          }
+        });
+
+        backToTop.addEventListener("click", function (e) {
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+      }
+    });
+  </script>
 </body>
-
 </html>
-

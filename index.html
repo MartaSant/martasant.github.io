@@ -5,42 +5,41 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Food Facts - Home</title>
   <link rel="stylesheet" href="style.css" />
-<link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
 </head>
 <body>
   <header class="site-header">
-  <div class="container header-content">
-    <a href="index.html" class="site-logo" aria-label="Food Facts home">
-      <div class="logo">
-        <div class="logo-mark">
-          <span class="ff ff-left">F</span>
-          <span class="ff ff-right">F</span>
+    <div class="container header-content">
+      <a href="index.html" class="site-logo" aria-label="Food Facts home">
+        <div class="logo">
+          <div class="logo-mark">
+            <span class="ff ff-left">F</span>
+            <span class="ff ff-right">F</span>
+          </div>
+          <div class="logo-text" aria-label="Food Facts">
+            <span class="logo-char">F</span>
+            <span class="logo-char">o</span>
+            <span class="logo-char">o</span>
+            <span class="logo-char">d</span>
+            <span class="logo-char">F</span>
+            <span class="logo-char">a</span>
+            <span class="logo-char">c</span>
+            <span class="logo-char">t</span>
+            <span class="logo-char">s</span>
+          </div>
         </div>
-        <div class="logo-text" aria-label="Food Facts">
-          <span class="logo-char">F</span>
-          <span class="logo-char">o</span>
-          <span class="logo-char">o</span>
-          <span class="logo-char">d</span>
-          <span class="logo-char">F</span>
-          <span class="logo-char">a</span>
-          <span class="logo-char">c</span>
-          <span class="logo-char">t</span>
-          <span class="logo-char">s</span>
-        </div>
-      </div>
-    </a>
-    <nav class="site-nav">
-      <a href="index.html" class="active">Home</a>
-      <a href="blog.html">Blog</a>
-      <a href="about.html">About</a>
-      <a href="contatti.html">Contact</a>
-    </nav>
-  </div>
-</header>
-
+      </a>
+      <nav class="site-nav">
+        <a href="index.html" class="active">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="about.html">About</a>
+        <a href="contatti.html">Contact</a>
+      </nav>
+    </div>
+  </header>
 
   <main class="container">
-    <section class="hero">
+    <section class="hero reveal-on-scroll">
       <div class="hero-inner">
         <!-- Foto + overlay + caption -->
         <div class="hero-photo-wrapper">
@@ -105,23 +104,25 @@
       </div>
     </section>
 
-    <section>
+    <section class="reveal-on-scroll">
       <h2 class="section-title">Latest posts</h2>
       <div class="post-list">
-<!-- Post3 -->
-<article class="post-card">
-  <h3 class="post-title">Quarto post</h3>
-  <p class="post-meta">Testing • November 24 2025</p>
-  <p class="post-excerpt">Estratto del quarto post</p>
-  <a href="post3.html" class="btn">Read the full post</a>
-</article>
-     <!-- Post2 -->
-<article class="post-card">
-  <h3 class="post-title">Terzo</h3>
-  <p class="post-meta">cazzeggio • giorno del giudizio</p>
-  <p class="post-excerpt">Boom!</p>
-  <a href="post2.html" class="btn">Read the full post</a>
-</article>
+        <!-- Post3 -->
+        <article class="post-card">
+          <h3 class="post-title">Quarto post</h3>
+          <p class="post-meta">Testing • November 24 2025</p>
+          <p class="post-excerpt">Estratto del quarto post</p>
+          <a href="post3.html" class="btn">Read the full post</a>
+        </article>
+
+        <!-- Post2 -->
+        <article class="post-card">
+          <h3 class="post-title">Terzo</h3>
+          <p class="post-meta">cazzeggio • giorno del giudizio</p>
+          <p class="post-excerpt">Boom!</p>
+          <a href="post2.html" class="btn">Read the full post</a>
+        </article>
+
         <!-- Post1 - più recente -->
         <article class="post-card">
           <h3 class="post-title">The Hidden Cost of Cheap Food: Inside the Problem of Overproduction</h3>
@@ -147,26 +148,71 @@
     </section>
   </main>
 
+  <!-- Back to top button -->
+  <button id="back-to-top" aria-label="Back to top">
+    ↑
+  </button>
+
   <footer class="site-footer">
-  <div class="container">
-    <p>© 2025 Food Facts. All rights reserved.</p>
-    <p>
-      <span aria-hidden="true" style="margin-right:0.25rem;">📷</span>
-      <a href="https://instagram.com/martasanclaire" target="_blank" rel="noopener">
-        Instagram
-      </a>
-      ·
-      <span aria-hidden="true" style="margin-right:0.25rem;">✉️</span>
-      <a href="contatti.html#newsletter">Newsletter</a>
-      ·
-      <span aria-hidden="true" style="margin-right:0.25rem;">🧜‍♀️</span>
-      <a href="privacy.html">Privacy &amp; data</a>
-    </p>
-  </div>
-</footer>
+    <div class="container">
+      <p>© 2025 Food Facts. All rights reserved.</p>
+      <p>
+        <span aria-hidden="true" style="margin-right:0.25rem;">📷</span>
+        <a href="https://instagram.com/martasanclaire" target="_blank" rel="noopener">
+          Instagram
+        </a>
+        ·
+        <span aria-hidden="true" style="margin-right:0.25rem;">✉️</span>
+        <a href="contatti.html#newsletter">Newsletter</a>
+        ·
+        <span aria-hidden="true" style="margin-right:0.25rem;">🧜‍♀️</span>
+        <a href="privacy.html">Privacy &amp; data</a>
+      </p>
+    </div>
+  </footer>
 
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      /* --- Reveal on scroll --- */
+      const revealEls = document.querySelectorAll(".reveal-on-scroll");
 
+      if ("IntersectionObserver" in window) {
+        const observer = new IntersectionObserver(
+          (entries, obs) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-visible");
+                obs.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.15 }
+        );
+
+        revealEls.forEach((el) => observer.observe(el));
+      } else {
+        // Browser vecchi: mostra tutto
+        revealEls.forEach((el) => el.classList.add("is-visible"));
+      }
+
+      /* --- Back to top button --- */
+      const backToTop = document.getElementById("back-to-top");
+
+      if (backToTop) {
+        window.addEventListener("scroll", function () {
+          if (window.scrollY > 400) {
+            backToTop.classList.add("visible");
+          } else {
+            backToTop.classList.remove("visible");
+          }
+        });
+
+        backToTop.addEventListener("click", function (e) {
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+      }
+    });
+  </script>
 </body>
 </html>
-
-

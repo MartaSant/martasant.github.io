@@ -379,7 +379,7 @@
       const excerptEsc = escapeHtml(excerpt);
       const categoriesEsc = escapeAttr(categoriesAttr);
 
-      // 1) HTML completo del post (postX.html) con header/footer aggiornati
+      // 1) HTML completo del post (postX.html) con header/footer aggiornati + reveal + back-to-top
       const postHtml = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -421,12 +421,12 @@
   </header>
 
   <main class="container">
-    <header class="page-header">
+    <header class="page-header reveal-on-scroll">
       <h1 class="page-title">${titleEsc}</h1>
       ${postMetaEsc ? `<p class="post-meta">${postMetaEsc}</p>` : ""}
     </header>
 
-    <article class="post">
+    <article class="post reveal-on-scroll">
       ${postBodyHtml}
     </article>
 
@@ -436,6 +436,10 @@
       </a>
     </p>
   </main>
+
+  <button id="back-to-top" aria-label="Back to top">
+    ↑
+  </button>
 
   <footer class="site-footer">
     <div class="container">
@@ -454,6 +458,50 @@
       </p>
     </div>
   </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      /* --- Reveal on scroll --- */
+      const revealEls = document.querySelectorAll(".reveal-on-scroll");
+
+      if ("IntersectionObserver" in window) {
+        const observer = new IntersectionObserver(
+          (entries, obs) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-visible");
+                obs.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.15 }
+        );
+
+        revealEls.forEach((el) => observer.observe(el));
+      } else {
+        // browser vecchi
+        revealEls.forEach((el) => el.classList.add("is-visible"));
+      }
+
+      /* --- Back to top --- */
+      const backToTop = document.getElementById("back-to-top");
+
+      if (backToTop) {
+        window.addEventListener("scroll", function () {
+          if (window.scrollY > 400) {
+            backToTop.classList.add("visible");
+          } else {
+            backToTop.classList.remove("visible");
+          }
+        });
+
+        backToTop.addEventListener("click", function (e) {
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+      }
+    });
+  </script>
 </body>
 </html>`;
 
